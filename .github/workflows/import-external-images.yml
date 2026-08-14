@@ -1,0 +1,30 @@
+name: Import external portfolio images
+
+on:
+  push:
+    paths:
+      - '.github/workflows/import-external-images.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download external images
+        run: |
+          set -euxo pipefail
+          mkdir -p assets/projects/skysafe assets/projects/shark
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://www.unmannedairspace.info/wp-content/uploads/2021/08/SafeSky-MM2-825x550.jpg' -o assets/projects/skysafe/mm2.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://www.sharkninja.co.id/cdn/shop/files/0790-SHBHD331ID-1_39ff0028-f439-442e-8dca-6ea1efdfb0d5.jpg?v=1756115592' -o assets/projects/shark/speedstyle.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://media.kohlsimg.com/is/image/kohls/6659387_ALT?hei=1400&op_sharpen=1&wid=1400' -o assets/projects/shark/smoothstyle.jpg
+          file assets/projects/skysafe/mm2.jpg assets/projects/shark/speedstyle.jpg assets/projects/shark/smoothstyle.jpg
+      - name: Commit imported images
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/projects/skysafe/mm2.jpg assets/projects/shark/speedstyle.jpg assets/projects/shark/smoothstyle.jpg
+          git commit -m 'Self-host remaining portfolio images'
+          git push
