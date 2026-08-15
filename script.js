@@ -8,7 +8,7 @@ if (heroLinks && !heroLinks.querySelector('a[href*="Stephen_Murphy_Resume_2023.p
   resume.href = 'assets/resume/Stephen_Murphy_Resume_2023.pdf';
   resume.target = '_blank';
   resume.rel = 'noopener';
-  resume.textContent = 'Résumé ↗';
+  resume.textContent = 'View résumé ↗';
 
   const linkedIn = heroLinks.querySelector('a[href*="linkedin.com"]');
   heroLinks.insertBefore(resume, linkedIn || null);
