@@ -20,6 +20,21 @@ const flexConcentrator = document.querySelector('img[alt="FlexStyle concentrator
 if (flexConcentrator) {
   const caption = flexConcentrator.closest('figure')?.querySelector('figcaption');
   if (caption) caption.textContent = 'FlexStyle concentrator. I optimized attachment sealing, surface temperature and airflow for this attachment.';
+
+  const flexGallery = flexConcentrator.closest('details')?.querySelector('.gallery');
+  if (flexGallery && !flexGallery.querySelector('img[alt="FlexStyle auto-wrap curlers and accessories"]')) {
+    flexGallery.classList.remove('two');
+    flexGallery.classList.add('three');
+    const figure = document.createElement('figure');
+    const image = document.createElement('img');
+    image.src = 'assets/projects/shark/flexstyle-accessories-lineup.webp';
+    image.alt = 'FlexStyle auto-wrap curlers and accessories';
+    image.loading = 'lazy';
+    const curlerCaption = document.createElement('figcaption');
+    curlerCaption.textContent = 'FlexStyle accessory lineup, including the Coanda auto-wrap curlers. I developed and optimized the curler geometry to use the Coanda effect to wrap hair around the barrel.';
+    figure.append(image, curlerCaption);
+    flexGallery.append(figure);
+  }
 }
 
 const sensorcraftInternal = document.querySelector('img[alt="Sensorcraft internal fuselage structure"]');
