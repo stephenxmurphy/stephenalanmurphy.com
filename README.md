@@ -25,6 +25,14 @@ Production deploys from the `main` branch through Cloudflare Workers static asse
 
 There is no framework build step; the repository root is the static site.
 
+## Rollback
+
+The site immediately before the August 15, 2026 editorial / Apple-style visual redesign is preserved on:
+
+`pre-apple-visual-redesign-2026-08-15`
+
+That branch points to commit `3bd2e0f4c8f36ba87da857de34313b898f525420` and should remain unchanged so the redesign can be reverted cleanly if needed.
+
 ## Content notes
 
 - Portfolio images are stored locally in the repository under `assets/projects/`; the public site does not depend on Wix-hosted media.
