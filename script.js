@@ -29,11 +29,10 @@ document.querySelectorAll('[data-carousel]').forEach((carousel) => {
   };
 
   const goTo = (index) => {
-    slides[Math.max(0, Math.min(index, slides.length - 1))]?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'start'
-    });
+    const slide = slides[Math.max(0, Math.min(index, slides.length - 1))];
+    if (!slide) return;
+    const left = track.scrollLeft + slide.getBoundingClientRect().left - track.getBoundingClientRect().left;
+    track.scrollTo({ left, behavior: 'smooth' });
   };
 
   previous?.addEventListener('click', () => goTo(activeIndex() - 1));
