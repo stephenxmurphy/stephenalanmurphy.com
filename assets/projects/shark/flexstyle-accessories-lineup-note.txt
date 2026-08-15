@@ -1,1 +1,0 @@
-The FlexStyle accessory-lineup image is being added as a binary asset in the next commit.
