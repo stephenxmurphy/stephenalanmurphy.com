@@ -29,5 +29,5 @@ There is no framework build step; the repository root is the static site.
 
 - Portfolio images are stored locally in the repository under `assets/projects/`; the public site does not depend on Wix-hosted media.
 - X-BAT public-program imagery is stored locally with the rest of the portfolio assets.
-- The old 2023 resume remains archived under `assets/resume/`, but is intentionally not linked from the public site because it is out of date.
+- The current résumé button opens the archived 2023 PDF in the browser's PDF viewer; the file will be replaced when the updated résumé is ready.
 - The original SkySafe MM2 internal-electronics image was not present in the recovered media archive, so the public site currently shows the exterior MM2 image only.
