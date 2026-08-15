@@ -9,7 +9,7 @@ Stephen Murphy's mechanical engineering and product design portfolio.
 - Vanilla JavaScript
 - No framework
 - No build step
-- Designed for GitHub + Cloudflare Pages
+- GitHub repository deployed through Cloudflare Workers static assets
 
 ## Local preview
 
@@ -19,20 +19,15 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000`.
 
-## Cloudflare Pages
+## Deployment
 
-Use this repository as the source.
+Production deploys from the `main` branch through Cloudflare Workers static assets / Git integration.
 
-- Framework preset: None
-- Build command: leave blank
-- Build output directory: repository root
-- Production branch: `main`
+There is no framework build step; the repository root is the static site.
 
-Do not point `stephenalanmurphy.com` at the new deployment until the preview site has been reviewed.
+## Content notes
 
-## Before final launch
-
-- Add Stephen's latest job experience.
-- Replace the current résumé link with the latest résumé.
-- Copy portfolio images into the repository so the site no longer depends on Wix-hosted assets.
-- Add a social/OG preview image.
+- Portfolio images are stored locally in the repository under `assets/projects/`; the public site does not depend on Wix-hosted media.
+- X-BAT public-program imagery is stored locally with the rest of the portfolio assets.
+- The old 2023 resume remains archived under `assets/resume/`, but is intentionally not linked from the public site because it is out of date.
+- The original SkySafe MM2 internal-electronics image was not present in the recovered media archive, so the public site currently shows the exterior MM2 image only.
