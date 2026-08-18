@@ -19,10 +19,10 @@
   display: inline-flex;
   align-items: center;
   min-height: 34px;
-  padding: 0 11px;
+  padding: 0 10px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #fff;
+  border-radius: 7px;
+  background: transparent;
   color: #454549;
   font-size: 12px;
   font-weight: 600;
@@ -36,19 +36,20 @@
 .company-section {
   padding: 48px 0 18px;
   background: var(--surface);
-  border-top: 8px solid #d8d8dd;
+  border-top: 0;
 }
 .company-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 5px;
   align-items: end;
-  margin: 0 -10px;
-  padding: 28px 10px 20px;
-  background: #e9e9ed;
-  border: 1px solid #d2d2d7;
-  border-bottom: 0;
-  border-radius: 18px 18px 0 0;
+  margin: 0;
+  padding: 28px 0 22px;
+  background: transparent;
+  border: 0;
+  border-top: 3px solid #d8d8dd;
+  border-bottom: 1px solid var(--line-light);
+  border-radius: 0;
 }
 .company-header .kicker {
   margin-bottom: 0;
@@ -71,15 +72,13 @@
   font-size: 15px;
 }
 .company-project-links {
-  margin: 0 -10px 10px;
-  padding: 0 10px 24px;
-  background: #e9e9ed;
-  border: 1px solid #d2d2d7;
-  border-top: 0;
-  border-radius: 0 0 18px 18px;
+  margin: 0 0 10px;
+  padding: 16px 0 22px;
+  background: transparent;
+  border: 0;
 }
 .company-project-links a {
-  background: rgba(255, 255, 255, .72);
+  background: transparent;
   border-color: #c7c7cc;
 }
 .company-project {
@@ -113,11 +112,13 @@
 
 .single-company-band,
 .early-company-band {
-  margin: 0 -10px 30px;
-  padding: 20px 10px;
-  background: #e9e9ed;
-  border: 1px solid #d2d2d7;
-  border-radius: 16px;
+  margin: 0 0 30px;
+  padding: 20px 0 16px;
+  background: transparent;
+  border: 0;
+  border-top: 3px solid #d8d8dd;
+  border-bottom: 1px solid var(--line-light);
+  border-radius: 0;
 }
 .single-company-band h2,
 .early-company-band h2 {
@@ -166,7 +167,7 @@
   min-height: 32px;
   padding: 0 10px;
   border: 1px solid var(--line-light);
-  border-radius: 999px;
+  border-radius: 7px;
   background: #fff;
   color: #454549;
   font-size: 12px;
@@ -194,25 +195,23 @@
   .project-jump-links a,
   .company-project-links a {
     min-height: 32px;
-    padding: 0 10px;
+    padding: 0 9px;
     font-size: 11px;
   }
   .company-section {
     padding-top: 34px;
-    border-top-width: 6px;
   }
   .company-header {
-    margin: 0 -4px;
-    padding: 22px 4px 18px;
-    border-radius: 14px 14px 0 0;
+    margin: 0;
+    padding: 22px 0 18px;
+    border-radius: 0;
   }
   .company-summary {
     margin-top: 15px;
   }
   .company-project-links {
-    margin: 0 -4px 8px;
-    padding: 0 4px 18px;
-    border-radius: 0 0 14px 14px;
+    margin: 0 0 8px;
+    padding: 14px 0 18px;
   }
   .company-project {
     padding: 32px 0 50px;
@@ -222,10 +221,10 @@
   }
   .single-company-band,
   .early-company-band {
-    margin-left: -4px;
-    margin-right: -4px;
-    padding: 17px 4px;
-    border-radius: 13px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 17px 0 14px;
+    border-radius: 0;
   }
   .single-company-band {
     margin-bottom: 24px;
