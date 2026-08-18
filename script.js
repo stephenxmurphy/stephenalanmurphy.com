@@ -1,3 +1,8 @@
+const structureStylesheet = document.createElement('link');
+structureStylesheet.rel = 'stylesheet';
+structureStylesheet.href = 'project-structure.css';
+document.head.append(structureStylesheet);
+
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
@@ -21,6 +26,112 @@ document.querySelectorAll('#expertise .expertise-grid > div').forEach((item) => 
     copy.textContent = `${copy.textContent}, ${addition}`;
   }
 });
+
+const projectHeadings = () => Array.from(document.querySelectorAll(
+  '.company-project h3, .project-section .project-header h2, .early-project h3'
+));
+
+const findProjectHeading = (title) => projectHeadings().find((heading) => heading.textContent.trim() === title);
+
+const reverbHeading = projectHeadings().find((heading) => heading.textContent.trim() === 'Design of Wire-based Metal 3D Printer');
+if (reverbHeading) reverbHeading.textContent = 'Wire-based Metal 3D Printer';
+
+const smoothStyleHeading = findProjectHeading('Shark SmoothStyle');
+const smoothStyleHeader = smoothStyleHeading?.closest('.subproject-header');
+if (smoothStyleHeader && !smoothStyleHeader.querySelector('.project-copy')) {
+  const blurb = document.createElement('p');
+  blurb.className = 'project-copy';
+  blurb.textContent = 'I supported the initial conceptual and R&D development of this device. The biggest challenge here was balancing the power budget to provide heated air and heated ceramic fins while also preventing the airflow from unintentionally cooling the ceramic fins.';
+  smoothStyleHeader.append(blurb);
+}
+
+const roleCorrections = new Map([
+  ['Design of Boeing Sensorcraft for Aeroelastic Research', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
+  ['Pneumatic Launcher for <20 kg UAVs', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
+  ['MATLAB Heat Flux Distribution near Vancouver Island', 'Institute of Ocean Sciences · Oceanographic Modelling Intern'],
+  ['Master of Engineering with a focus on Zinc-air Battery Modeling and Renewable Technologies', 'University of Victoria · Graduate Student'],
+  ['Aircraft Design and Composite Construction of Drone', 'University of Victoria AERO Team · President & Aeronautical Lead']
+]);
+
+roleCorrections.forEach((role, title) => {
+  const heading = findProjectHeading(title);
+  const roleLine = heading?.closest('.early-copy')?.querySelector('.role-line');
+  if (roleLine) roleLine.textContent = role;
+});
+
+const projectDefinitions = [
+  { title: 'X-BAT', label: 'X-BAT', id: 'xbat' },
+  { title: 'V-BAT Fixed Wing Aircraft', label: 'V-BAT', id: 'vbat' },
+  { title: 'Gen 2 Counter-UAS Hardware', label: 'Gen 2 Counter-UAS', id: 'skysafe-gen2' },
+  { title: 'Wire-based Metal 3D Printer', label: 'Metal 3D Printer', id: 'reverb-metal-printer' },
+  { title: 'Shark FlexStyle', label: 'FlexStyle', id: 'flexstyle' },
+  { title: 'Shark HyperAir', label: 'HyperAir', id: 'hyperair' },
+  { title: 'Shark SpeedStyle', label: 'SpeedStyle', id: 'speedstyle' },
+  { title: 'Shark SmoothStyle', label: 'SmoothStyle', id: 'smoothstyle' },
+  { title: 'Drone Flight Planning and Control', label: 'Mission Control', id: 'mission-control' },
+  { title: 'New Fixed-Wing UAS', label: 'Fixed-Wing UAS', id: 'intel-fixed-wing' },
+  { title: '3-axis CNC Mill Design and Construction', label: 'CNC Mill', id: 'cnc-mill' },
+  { title: 'Design of Boeing Sensorcraft for Aeroelastic Research', label: 'Sensorcraft', id: 'sensorcraft' },
+  { title: 'Pneumatic Launcher for <20 kg UAVs', label: 'UAV Launcher', id: 'uav-launcher' },
+  { title: 'MATLAB Heat Flux Distribution near Vancouver Island', label: 'MATLAB Heat Flux', id: 'matlab-heat-flux' },
+  { title: 'Master of Engineering with a focus on Zinc-air Battery Modeling and Renewable Technologies', label: 'Zinc-air Battery', id: 'zinc-air-battery' },
+  { title: 'Aircraft Design and Composite Construction of Drone', label: 'AERO UAV', id: 'aero-uav' }
+];
+
+projectDefinitions.forEach(({ title, id }) => {
+  const heading = findProjectHeading(title);
+  const container = heading?.closest('.company-project, .project-section, .early-project');
+  if (container) container.id = id;
+});
+
+document.querySelectorAll('.company-section').forEach((section) => {
+  const header = section.querySelector(':scope > .shell > .company-header');
+  const projects = Array.from(section.querySelectorAll(':scope > .shell > .company-project'));
+  if (!header || projects.length < 2 || section.querySelector('.company-project-links')) return;
+
+  const nav = document.createElement('nav');
+  nav.className = 'company-project-links';
+  const company = header.querySelector('.kicker')?.textContent.trim() || 'Company';
+  nav.setAttribute('aria-label', `${company} projects`);
+
+  projects.forEach((project) => {
+    const heading = project.querySelector('h3');
+    if (!heading || !project.id) return;
+    const link = document.createElement('a');
+    link.href = `#${project.id}`;
+    link.textContent = heading.textContent.replace(/^Shark\s+/, '');
+    nav.append(link);
+  });
+
+  header.after(nav);
+});
+
+const expertiseSection = document.querySelector('#expertise');
+if (expertiseSection && !document.querySelector('.project-jump')) {
+  const jump = document.createElement('section');
+  jump.className = 'project-jump shell';
+  jump.setAttribute('aria-labelledby', 'project-jump-title');
+
+  const kicker = document.createElement('p');
+  kicker.className = 'kicker';
+  kicker.id = 'project-jump-title';
+  kicker.textContent = 'Projects';
+
+  const nav = document.createElement('nav');
+  nav.className = 'project-jump-links';
+  nav.setAttribute('aria-label', 'Jump to project');
+
+  projectDefinitions.forEach(({ label, id }) => {
+    if (!document.getElementById(id)) return;
+    const link = document.createElement('a');
+    link.href = `#${id}`;
+    link.textContent = label;
+    nav.append(link);
+  });
+
+  jump.append(kicker, nav);
+  expertiseSection.after(jump);
+}
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
