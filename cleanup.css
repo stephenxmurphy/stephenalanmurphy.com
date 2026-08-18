@@ -160,6 +160,10 @@
   padding-top: 0;
   background: transparent;
 }
+/* Match the Professional Projects transition: no gap before the first employer. */
+.academic-group .earlier > .early-company-band:first-child {
+  margin-top: 0;
+}
 
 .carousel figcaption a {
   text-decoration: underline;
