@@ -1,0 +1,401 @@
+name: One-shot section hierarchy cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-shot-section-hierarchy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update portfolio hierarchy
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('script.js')
+          s = path.read_text()
+
+          def replace_once(old, new, label):
+              global s
+              if old not in s:
+                  raise SystemExit(f'Missing expected block: {label}')
+              s = s.replace(old, new, 1)
+
+          replace_once(
+          """if (expertiseLink) expertiseLink.textContent = 'Areas of Expertise';
+          if (primaryNav && expertiseLink && projectsLink) {
+            primaryNav.insertBefore(expertiseLink, projectsLink);
+          }
+          if (contactLink) {
+            contactLink.href = emailHref;
+            contactLink.textContent = 'Email';
+          }
+          """,
+          """if (expertiseLink) expertiseLink.textContent = 'Areas of Expertise';
+          if (projectsLink) {
+            projectsLink.textContent = 'Professional Projects';
+            projectsLink.href = '#professional-projects';
+          }
+          if (primaryNav && expertiseLink && projectsLink) {
+            primaryNav.insertBefore(expertiseLink, projectsLink);
+          }
+          if (contactLink) {
+            contactLink.href = emailHref;
+            contactLink.textContent = 'Email';
+          }
+          if (primaryNav && !primaryNav.querySelector('a[href=\"#academic-projects\"]')) {
+            const academicLink = document.createElement('a');
+            academicLink.href = '#academic-projects';
+            academicLink.textContent = 'Academic & Internship Projects';
+            primaryNav.insertBefore(academicLink, contactLink || null);
+          }
+          """,
+          'primary navigation')
+
+          s = s.replace('Design Manager, AD & NPD', 'Design Manager, Advanced and New Product Development')
+
+          s = s.replace(
+              "I am a named inventor on eight granted U.S. patents in this product's patent family, with one additional U.S. application pending; see the patents list below.",
+              "I am a named inventor on eight granted U.S. patents in the FlexStyle patent family—three original filings and five continuation grants—with one additional U.S. application pending; see the patents list below."
+          )
+          s = s.replace(
+              "Hair care appliance patent family — 8 granted U.S. patents · 1 pending U.S. application",
+              "FlexStyle patent family — 8 U.S. grants (3 original + 5 continuations) · 1 pending application"
+          )
+
+          replace_once(
+          """const earlierSection = document.querySelector('.earlier');
+          const outsideSection = document.querySelector('.outside');
+          if (earlierSection && outsideSection && !document.querySelector('.academic-group')) {
+            const group = document.createElement('section');
+            group.className = 'academic-group';
+
+            const heading = document.createElement('header');
+            heading.className = 'academic-group-header shell';
+            const kicker = document.createElement('p');
+            kicker.className = 'kicker';
+            kicker.textContent = 'Earlier Work';
+            const title = document.createElement('h2');
+            title.textContent = 'Academic Work, Internships & Hobbies';
+            heading.append(kicker, title);
+
+            earlierSection.before(group);
+            group.append(heading, earlierSection, outsideSection);
+          }
+          """,
+          """const earlierSection = document.querySelector('.earlier');
+          if (earlierSection && !document.querySelector('.academic-group')) {
+            const group = document.createElement('section');
+            group.className = 'academic-group';
+            group.id = 'academic-projects';
+
+            const heading = document.createElement('header');
+            heading.className = 'academic-group-header shell';
+            const title = document.createElement('h2');
+            title.textContent = 'Academic & Internship Projects';
+            heading.append(title);
+
+            earlierSection.before(group);
+            group.append(heading, earlierSection);
+          }
+          """,
+          'academic group')
+
+          replace_once(
+          """// Company bands are company/context only. Roles live with the projects.
+          document.querySelectorAll('.company-header .company-role').forEach((role) => role.remove());
+          """,
+          """// Company bands carry the employer name only. Roles live with the projects.
+          document.querySelectorAll('.company-header .company-role').forEach((role) => role.remove());
+          document.querySelectorAll('.company-header h2').forEach((subtitle) => subtitle.remove());
+          """,
+          'company header cleanup')
+
+          old_early = """// Earlier work uses the same Company · Job Title band convention as the rest of the portfolio.
+          let previousEarlyContext = '';
+          document.querySelectorAll('.early-project').forEach((project) => {
+            const roleLine = project.querySelector('.early-copy .role-line');
+            if (!roleLine) return;
+            const { company, role } = splitRole(roleLine.textContent);
+            if (!company) return;
+
+            const context = role ? `${company} · ${role}` : company;
+            if (context !== previousEarlyContext) {
+              const band = document.createElement('header');
+              band.className = 'early-company-band';
+              const companyName = document.createElement('h2');
+              companyName.textContent = context;
+              band.append(companyName);
+              project.before(band);
+            }
+
+            previousEarlyContext = context;
+            roleLine.remove();
+          });
+          """
+          new_early = """// Academic and internship projects keep Company · Job Title directly above each project title.
+          document.querySelectorAll('.early-company-band').forEach((band) => band.remove());
+          """
+          replace_once(old_early, new_early, 'academic employer bands')
+
+          marker = "const projectDefinitions = ["
+          if marker not in s:
+              raise SystemExit('Missing projectDefinitions marker')
+          professional = """const workSection = document.querySelector('#work');
+          let professionalSectionHeader = document.querySelector('#professional-projects');
+          if (workSection && !professionalSectionHeader) {
+            professionalSectionHeader = document.createElement('section');
+            professionalSectionHeader.className = 'portfolio-section-heading shell';
+            professionalSectionHeader.id = 'professional-projects';
+            const title = document.createElement('h2');
+            title.textContent = 'Professional Projects';
+            professionalSectionHeader.append(title);
+            workSection.before(professionalSectionHeader);
+          }
+
+          """
+          s = s.replace(marker, professional + marker, 1)
+
+          replace_once(
+          """  family.textContent = 'Hair care appliance patent family — 8 granted U.S. patents · 1 pending U.S. application';
+          """,
+          """  family.textContent = 'FlexStyle patent family — 8 U.S. grants (3 original + 5 continuations) · 1 pending application';
+          """,
+          'patent family summary')
+
+          replace_once(
+          """const expertiseSection = document.querySelector('#expertise');
+          if (expertiseSection && !document.querySelector('.project-jump')) {
+            const jump = document.createElement('section');
+            jump.className = 'project-jump shell';
+            jump.setAttribute('aria-labelledby', 'project-jump-title');
+
+            const kicker = document.createElement('p');
+            kicker.className = 'kicker';
+            kicker.id = 'project-jump-title';
+            kicker.textContent = 'Projects';
+
+            const nav = document.createElement('nav');
+            nav.className = 'project-jump-links';
+            nav.setAttribute('aria-label', 'Jump to project');
+
+            projectDefinitions.forEach(({ label, id }) => {
+              if (!document.getElementById(id)) return;
+              const link = document.createElement('a');
+              link.href = `#${id}`;
+              link.textContent = label;
+              nav.append(link);
+            });
+
+            jump.append(kicker, nav);
+            expertiseSection.after(jump);
+          }
+          """,
+          """const academicProjectIds = new Set([
+            'sensorcraft',
+            'uav-launcher',
+            'matlab-heat-flux',
+            'zinc-air-battery',
+            'aero-uav'
+          ]);
+
+          const expertiseSection = document.querySelector('#expertise');
+          if (expertiseSection && !document.querySelector('.project-jump')) {
+            const jump = document.createElement('section');
+            jump.className = 'project-jump shell';
+            jump.setAttribute('aria-labelledby', 'project-jump-title');
+
+            const kicker = document.createElement('p');
+            kicker.className = 'kicker';
+            kicker.id = 'project-jump-title';
+            kicker.textContent = 'Project shortcuts';
+
+            const nav = document.createElement('nav');
+            nav.className = 'project-jump-links';
+            nav.setAttribute('aria-label', 'Jump to professional project');
+
+            projectDefinitions.forEach(({ label, id }) => {
+              if (academicProjectIds.has(id) || !document.getElementById(id)) return;
+              const link = document.createElement('a');
+              link.href = `#${id}`;
+              link.textContent = label;
+              nav.append(link);
+            });
+
+            jump.append(kicker, nav);
+            (professionalSectionHeader || expertiseSection).after(jump);
+          }
+
+          const academicHeader = document.querySelector('#academic-projects .academic-group-header');
+          if (academicHeader && !academicHeader.querySelector('.academic-project-links')) {
+            const nav = document.createElement('nav');
+            nav.className = 'project-jump-links academic-project-links';
+            nav.setAttribute('aria-label', 'Jump to academic or internship project');
+            projectDefinitions.forEach(({ label, id }) => {
+              if (!academicProjectIds.has(id) || !document.getElementById(id)) return;
+              const link = document.createElement('a');
+              link.href = `#${id}`;
+              link.textContent = label;
+              nav.append(link);
+            });
+            academicHeader.append(nav);
+          }
+          """,
+          'project shortcut blocks')
+
+          path.write_text(s)
+
+          Path('cleanup.css').write_text(r''' .site-header nav a[href^="mailto:"] {
+            display: none;
+          }
+
+          .header-actions {
+            justify-self: end;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+          }
+          .header-actions a[href*="Stephen_Murphy_Resume"] { order: 1; }
+          .header-actions a[href^="mailto:"] { order: 2; }
+
+          .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+          }
+          .hero-actions a[href*="Stephen_Murphy_Resume"] { order: 1; }
+          .hero-actions a[href^="mailto:"] { order: 2; }
+
+          /* Top-level portfolio sections use plain, spacious dividers. Company headers use gray bands. */
+          .expertise > .kicker,
+          .portfolio-section-heading h2,
+          .academic-group-header h2 {
+            color: var(--ink);
+            font-size: clamp(30px, 3.8vw, 44px);
+            font-weight: 680;
+            line-height: 1.02;
+            letter-spacing: -.035em;
+            text-transform: none;
+          }
+
+          .expertise > .kicker {
+            margin-bottom: 22px;
+          }
+
+          .portfolio-section-heading,
+          .academic-group-header {
+            padding-top: 68px;
+            padding-bottom: 24px;
+            border-top: 1px solid var(--line);
+          }
+
+          .portfolio-section-heading h2,
+          .academic-group-header h2 {
+            margin-bottom: 0;
+          }
+
+          .project-jump {
+            padding-top: 0;
+          }
+
+          .project-jump > .kicker {
+            margin-bottom: 11px;
+          }
+
+          /* Company name is always the dominant text inside a gray company band. */
+          .company-section {
+            border-top: 1px solid var(--line);
+          }
+
+          .company-header .kicker,
+          .single-company-band h2 {
+            margin: 0;
+            color: var(--ink);
+            font-size: clamp(30px, 3.7vw, 44px);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -.035em;
+            text-transform: none;
+          }
+
+          .company-header h2 {
+            display: none;
+          }
+
+          .single-company-band {
+            padding-top: 24px;
+            padding-bottom: 24px;
+          }
+
+          .early-company-band {
+            display: none;
+          }
+
+          .academic-group {
+            background: var(--surface);
+          }
+
+          .academic-group-header {
+            margin-bottom: 0;
+          }
+
+          .academic-project-links {
+            margin-top: 18px;
+          }
+
+          .academic-group .earlier {
+            padding-top: 0;
+            background: transparent;
+          }
+
+          .carousel figcaption a {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+          }
+
+          @media (max-width: 720px) {
+            .header-actions {
+              gap: 9px;
+            }
+
+            .header-actions .header-link {
+              font-size: 12px;
+            }
+
+            .expertise > .kicker,
+            .portfolio-section-heading h2,
+            .academic-group-header h2,
+            .company-header .kicker,
+            .single-company-band h2 {
+              font-size: 32px;
+            }
+
+            .portfolio-section-heading,
+            .academic-group-header {
+              padding-top: 50px;
+              padding-bottom: 20px;
+            }
+
+            .single-company-band {
+              padding-top: 20px;
+              padding-bottom: 20px;
+            }
+          }
+          ''')
+          PY
+
+          node --check script.js
+          rm .github/workflows/one-shot-section-hierarchy.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Clarify portfolio section hierarchy"
+          git push
