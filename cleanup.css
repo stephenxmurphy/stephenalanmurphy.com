@@ -101,6 +101,8 @@
   text-underline-offset: 2px;
 }
 
+/* Redeploy marker: 2026-08-18 */
+
 @media (max-width: 720px) {
   .header-actions {
     gap: 9px;
