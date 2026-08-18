@@ -2,12 +2,7 @@
   white-space: nowrap;
 }
 
-.project-jump {
-  padding: 0 0 62px;
-}
-.project-jump > .kicker {
-  margin-bottom: 12px;
-}
+/* Shared shortcut/link controls. Visual page hierarchy lives in cleanup.css. */
 .project-jump-links,
 .company-project-links {
   display: flex;
@@ -33,33 +28,16 @@
   background: var(--soft);
 }
 
+/* Company/project structure. */
 .company-section {
-  padding: 48px 0 18px;
+  padding: 0 0 18px;
   background: var(--surface);
-  border-top: 0;
 }
 .company-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 5px;
   align-items: end;
-  margin: 0;
-  padding: 28px 0 22px;
-  background: transparent;
-  border: 0;
-  border-top: 3px solid #d8d8dd;
-  border-bottom: 1px solid var(--line-light);
-  border-radius: 0;
-}
-.company-header .kicker {
-  margin-bottom: 0;
-  color: #56565b;
-}
-.company-header h2 {
-  margin: 0;
-  font-size: clamp(34px, 4vw, 48px);
-  line-height: 1.02;
-  letter-spacing: -.038em;
 }
 .company-summary {
   grid-column: 1 / -1;
@@ -74,11 +52,8 @@
 .company-project-links {
   margin: 0 0 10px;
   padding: 16px 0 22px;
-  background: transparent;
-  border: 0;
 }
 .company-project-links a {
-  background: transparent;
   border-color: #c7c7cc;
 }
 .company-project {
@@ -88,6 +63,7 @@
 .company-project + .company-project {
   border-top: 1px solid var(--line-light);
 }
+
 .subproject-header {
   display: block;
   max-width: 920px;
@@ -110,26 +86,10 @@
   margin-top: 0;
 }
 
+/* Spacing between generated employer bands; their visual style lives in cleanup.css. */
 .single-company-band,
 .early-company-band {
   margin: 0 0 30px;
-  padding: 20px 0 16px;
-  background: transparent;
-  border: 0;
-  border-top: 3px solid #d8d8dd;
-  border-bottom: 1px solid var(--line-light);
-  border-radius: 0;
-}
-.single-company-band h2,
-.early-company-band h2 {
-  margin: 0;
-  font-size: clamp(25px, 3vw, 34px);
-  line-height: 1.05;
-  letter-spacing: -.032em;
-  font-weight: 650;
-}
-.project-section:has(.single-company-band) {
-  padding-top: 48px;
 }
 .early-company-band {
   margin-top: 46px;
@@ -185,9 +145,6 @@
 }
 
 @media (max-width: 720px) {
-  .project-jump {
-    padding-bottom: 48px;
-  }
   .project-jump-links,
   .company-project-links {
     gap: 7px;
@@ -198,19 +155,11 @@
     padding: 0 9px;
     font-size: 11px;
   }
-  .company-section {
-    padding-top: 34px;
-  }
-  .company-header {
-    margin: 0;
-    padding: 22px 0 18px;
-    border-radius: 0;
-  }
   .company-summary {
     margin-top: 15px;
   }
   .company-project-links {
-    margin: 0 0 8px;
+    margin-bottom: 8px;
     padding: 14px 0 18px;
   }
   .company-project {
@@ -218,13 +167,6 @@
   }
   .subproject-header h3 {
     font-size: 36px;
-  }
-  .single-company-band,
-  .early-company-band {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 17px 0 14px;
-    border-radius: 0;
   }
   .single-company-band {
     margin-bottom: 24px;
