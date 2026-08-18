@@ -3,6 +3,11 @@ structureStylesheet.rel = 'stylesheet';
 structureStylesheet.href = 'project-structure.css';
 document.head.append(structureStylesheet);
 
+const cleanupStylesheet = document.createElement('link');
+cleanupStylesheet.rel = 'stylesheet';
+cleanupStylesheet.href = 'cleanup.css';
+document.head.append(cleanupStylesheet);
+
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
@@ -18,16 +23,44 @@ if (footer) {
   trailingPortfolio?.remove();
 }
 
+const emailHref = 'mailto:s_murphy@outlook.com';
 const primaryNav = document.querySelector('.site-header nav');
 const expertiseLink = primaryNav?.querySelector('a[href="#expertise"]');
 const projectsLink = primaryNav?.querySelector('a[href="#work"]');
+const contactLink = primaryNav?.querySelector('a[href="#contact"]');
 if (expertiseLink) expertiseLink.textContent = 'Areas of Expertise';
 if (primaryNav && expertiseLink && projectsLink) {
   primaryNav.insertBefore(expertiseLink, projectsLink);
 }
+if (contactLink) {
+  contactLink.href = emailHref;
+  contactLink.textContent = 'Email';
+}
+
+const siteHeader = document.querySelector('.site-header');
+const headerResume = siteHeader?.querySelector(':scope > .header-link');
+if (siteHeader && headerResume && !siteHeader.querySelector('.header-actions')) {
+  const actions = document.createElement('div');
+  actions.className = 'header-actions';
+  const email = document.createElement('a');
+  email.className = 'header-link';
+  email.href = emailHref;
+  email.textContent = 'Email ↗';
+  actions.append(email, headerResume);
+  siteHeader.append(actions);
+}
+
+const heroActions = document.querySelector('.hero-actions');
+if (heroActions && !heroActions.querySelector('a[href^="mailto:"]')) {
+  const email = document.createElement('a');
+  email.className = 'button';
+  email.href = emailHref;
+  email.textContent = 'Email ↗';
+  heroActions.append(email);
+}
 
 const expertiseAdditions = {
-  'Programming & Simulation': ['Simcenter 3D'],
+  'Programming & Simulation': ['Simcenter 3D FEA'],
   'Mechanical Design': [
     'vibration analysis and isolation',
     'batteries',
@@ -111,12 +144,16 @@ if (xbatHeading && xbatProject) {
     media.setAttribute('data-carousel', '');
     media.innerHTML = `
       <div class="carousel compact-carousel" data-carousel-track>
+        <figure>
+          <img src="assets/projects/shield/military-aircraft.png" alt="Example environmental control and thermal management system for military aircraft" loading="lazy">
+          <figcaption>Example military-aircraft ECS / thermal-management system. Source: <a href="https://www.hughes-treitler.com/markets/military-aircraft" target="_blank" rel="noopener">Hughes-Treitler ↗</a></figcaption>
+        </figure>
         <figure class="video-slide">
           <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/17_P4x0k3XM?rel=0" title="X-BAT Hopper prototype" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
           <figcaption>X-BAT Hopper prototype.</figcaption>
         </figure>
       </div>
-      <div class="carousel-controls"><span class="carousel-count" data-carousel-count>1 / 1</span><div><button type="button" data-carousel-prev aria-label="Previous Hopper ECS media">←</button><button type="button" data-carousel-next aria-label="Next Hopper ECS media">→</button></div></div>`;
+      <div class="carousel-controls"><span class="carousel-count" data-carousel-count>1 / 2</span><div><button type="button" data-carousel-prev aria-label="Previous Hopper ECS media">←</button><button type="button" data-carousel-next aria-label="Next Hopper ECS media">→</button></div></div>`;
 
     ecsProject.append(header, media);
     xbatProject.after(ecsProject);
@@ -141,12 +178,33 @@ if (flexStyleCopy) {
   );
 }
 
+const matlabHeading = findProjectHeading('MATLAB Heat Flux Distribution near Vancouver Island');
+if (matlabHeading) matlabHeading.textContent = 'Oceanographic Heat Flux Modeling in MATLAB';
+
+const aeroHeading = findProjectHeading('Aircraft Design and Composite Construction of Drone');
+if (aeroHeading) aeroHeading.textContent = 'Aircraft Design and Composite Construction';
+
+const sensorcraftHeading = findProjectHeading('Design of Boeing Sensorcraft for Aeroelastic Research');
+const sensorcraftProject = sensorcraftHeading?.closest('.early-project');
+if (sensorcraftProject) {
+  const track = sensorcraftProject.querySelector('[data-carousel-track]');
+  const cadFigure = track?.querySelector('img[src$="sensorcraft/cad-render.webp"]')?.closest('figure');
+  const internalFigure = track?.querySelector('img[src$="sensorcraft/internal-structure.webp"]')?.closest('figure');
+  if (cadFigure && internalFigure) {
+    const cadCaption = cadFigure.querySelector('figcaption');
+    if (cadCaption) {
+      cadCaption.textContent = 'This is the 3m wingspan Boeing Sensorcraft where I designed all the internal mechanical structure and components. I became an expert at surfacing and multi-body design in SOLIDWORKS during this project, which has proven very useful for many design projects since.';
+    }
+    track.replaceChildren(cadFigure, internalFigure);
+  }
+}
+
 const roleCorrections = new Map([
   ['Design of Boeing Sensorcraft for Aeroelastic Research', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
   ['Pneumatic Launcher for <20 kg UAVs', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
-  ['MATLAB Heat Flux Distribution near Vancouver Island', 'Institute of Ocean Sciences · Oceanographic Modelling Intern'],
+  ['Oceanographic Heat Flux Modeling in MATLAB', 'Institute of Ocean Sciences · Oceanographic Modelling Intern'],
   ['Master of Engineering with a focus on Zinc-air Battery Modeling and Renewable Technologies', 'University of Victoria · Graduate Student'],
-  ['Aircraft Design and Composite Construction of Drone', 'University of Victoria AERO Team · President & Aeronautical Lead']
+  ['Aircraft Design and Composite Construction', 'University of Victoria AERO Team · President & Aeronautical Lead']
 ]);
 
 roleCorrections.forEach((role, title) => {
@@ -154,6 +212,25 @@ roleCorrections.forEach((role, title) => {
   const roleLine = heading?.closest('.early-copy')?.querySelector('.role-line');
   if (roleLine) roleLine.textContent = role;
 });
+
+const earlierSection = document.querySelector('.earlier');
+const outsideSection = document.querySelector('.outside');
+if (earlierSection && outsideSection && !document.querySelector('.academic-group')) {
+  const group = document.createElement('section');
+  group.className = 'academic-group';
+
+  const heading = document.createElement('header');
+  heading.className = 'academic-group-header shell';
+  const kicker = document.createElement('p');
+  kicker.className = 'kicker';
+  kicker.textContent = 'Earlier Work';
+  const title = document.createElement('h2');
+  title.textContent = 'Academic Work, Internships & Hobbies';
+  heading.append(kicker, title);
+
+  earlierSection.before(group);
+  group.append(heading, earlierSection, outsideSection);
+}
 
 // Company bands are company/context only. Roles live with the projects.
 document.querySelectorAll('.company-header .company-role').forEach((role) => role.remove());
@@ -233,9 +310,9 @@ const projectDefinitions = [
   { title: '3-axis CNC Mill Design and Construction', label: 'CNC Mill', id: 'cnc-mill' },
   { title: 'Design of Boeing Sensorcraft for Aeroelastic Research', label: 'Sensorcraft', id: 'sensorcraft' },
   { title: 'Pneumatic Launcher for <20 kg UAVs', label: 'UAV Launcher', id: 'uav-launcher' },
-  { title: 'MATLAB Heat Flux Distribution near Vancouver Island', label: 'MATLAB Heat Flux', id: 'matlab-heat-flux' },
+  { title: 'Oceanographic Heat Flux Modeling in MATLAB', label: 'Oceanographic Heat Flux', id: 'matlab-heat-flux' },
   { title: 'Master of Engineering with a focus on Zinc-air Battery Modeling and Renewable Technologies', label: 'Zinc-air Battery', id: 'zinc-air-battery' },
-  { title: 'Aircraft Design and Composite Construction of Drone', label: 'AERO UAV', id: 'aero-uav' }
+  { title: 'Aircraft Design and Composite Construction', label: 'AERO UAV', id: 'aero-uav' }
 ];
 
 projectDefinitions.forEach(({ title, id }) => {
