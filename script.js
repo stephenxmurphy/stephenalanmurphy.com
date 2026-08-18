@@ -30,12 +30,22 @@ const expertiseLink = primaryNav?.querySelector('a[href="#expertise"]');
 const projectsLink = primaryNav?.querySelector('a[href="#work"]');
 const contactLink = primaryNav?.querySelector('a[href="#contact"]');
 if (expertiseLink) expertiseLink.textContent = 'Areas of Expertise';
+if (projectsLink) {
+  projectsLink.textContent = 'Professional Projects';
+  projectsLink.href = '#professional-projects';
+}
 if (primaryNav && expertiseLink && projectsLink) {
   primaryNav.insertBefore(expertiseLink, projectsLink);
 }
 if (contactLink) {
   contactLink.href = emailHref;
   contactLink.textContent = 'Email';
+}
+if (primaryNav && !primaryNav.querySelector('a[href="#academic-projects"]')) {
+  const academicLink = document.createElement('a');
+  academicLink.href = '#academic-projects';
+  academicLink.textContent = 'Academic & Internship Projects';
+  primaryNav.insertBefore(academicLink, contactLink || null);
 }
 
 const siteHeader = document.querySelector('.site-header');
@@ -175,7 +185,7 @@ const flexStyleCopy = flexStyleHeading?.closest('.subproject-header')?.querySele
 if (flexStyleCopy) {
   flexStyleCopy.textContent = flexStyleCopy.textContent.replace(
     'I also have a design patent application under review for this innovative hair styling tool, which has been making waves in the market.',
-    "I am a named inventor on eight granted U.S. patents in this product's patent family, with one additional U.S. application pending; see the patents list below."
+    "I am a named inventor on eight granted U.S. patents in the FlexStyle patent family—three original filings and five continuation grants—with one additional U.S. application pending; see the patents list below."
   );
 }
 
@@ -215,26 +225,24 @@ roleCorrections.forEach((role, title) => {
 });
 
 const earlierSection = document.querySelector('.earlier');
-const outsideSection = document.querySelector('.outside');
-if (earlierSection && outsideSection && !document.querySelector('.academic-group')) {
+if (earlierSection && !document.querySelector('.academic-group')) {
   const group = document.createElement('section');
   group.className = 'academic-group';
+  group.id = 'academic-projects';
 
   const heading = document.createElement('header');
   heading.className = 'academic-group-header shell';
-  const kicker = document.createElement('p');
-  kicker.className = 'kicker';
-  kicker.textContent = 'Earlier Work';
   const title = document.createElement('h2');
-  title.textContent = 'Academic Work, Internships & Hobbies';
-  heading.append(kicker, title);
+  title.textContent = 'Academic & Internship Projects';
+  heading.append(title);
 
   earlierSection.before(group);
-  group.append(heading, earlierSection, outsideSection);
+  group.append(heading, earlierSection);
 }
 
-// Company bands are company/context only. Roles live with the projects.
+// Company bands carry the employer name only. Roles live with the projects.
 document.querySelectorAll('.company-header .company-role').forEach((role) => role.remove());
+document.querySelectorAll('.company-header h2').forEach((subtitle) => subtitle.remove());
 
 document.querySelectorAll('.company-section').forEach((section) => {
   const company = section.querySelector('.company-header .kicker')?.textContent.trim() || '';
@@ -246,7 +254,7 @@ document.querySelectorAll('.company-section').forEach((section) => {
     if (!roleLine && company === 'SharkNinja') {
       roleLine = document.createElement('p');
       roleLine.className = 'role-line';
-      roleLine.textContent = 'Design Manager, AD & NPD';
+      roleLine.textContent = 'Design Manager, Advanced and New Product Development';
       const title = header.querySelector('h3');
       title?.before(roleLine);
     } else if (roleLine?.textContent.includes('·')) {
@@ -275,27 +283,20 @@ document.querySelectorAll('.project-section').forEach((section) => {
   if (role) roleLine.textContent = role;
 });
 
-// Earlier work uses the same Company · Job Title band convention as the rest of the portfolio.
-let previousEarlyContext = '';
-document.querySelectorAll('.early-project').forEach((project) => {
-  const roleLine = project.querySelector('.early-copy .role-line');
-  if (!roleLine) return;
-  const { company, role } = splitRole(roleLine.textContent);
-  if (!company) return;
+// Academic and internship projects keep Company · Job Title directly above each project title.
+document.querySelectorAll('.early-company-band').forEach((band) => band.remove());
 
-  const context = role ? `${company} · ${role}` : company;
-  if (context !== previousEarlyContext) {
-    const band = document.createElement('header');
-    band.className = 'early-company-band';
-    const companyName = document.createElement('h2');
-    companyName.textContent = context;
-    band.append(companyName);
-    project.before(band);
-  }
-
-  previousEarlyContext = context;
-  roleLine.remove();
-});
+const workSection = document.querySelector('#work');
+let professionalSectionHeader = document.querySelector('#professional-projects');
+if (workSection && !professionalSectionHeader) {
+  professionalSectionHeader = document.createElement('section');
+  professionalSectionHeader.className = 'portfolio-section-heading shell';
+  professionalSectionHeader.id = 'professional-projects';
+  const title = document.createElement('h2');
+  title.textContent = 'Professional Projects';
+  professionalSectionHeader.append(title);
+  workSection.before(professionalSectionHeader);
+}
 
 const projectDefinitions = [
   { title: 'X-BAT Wing-fold', label: 'X-BAT Wing-fold', id: 'xbat-wing-fold' },
@@ -373,7 +374,7 @@ if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
 
   const family = document.createElement('p');
   family.className = 'patent-family';
-  family.textContent = 'Hair care appliance patent family — 8 granted U.S. patents · 1 pending U.S. application';
+  family.textContent = 'FlexStyle patent family — 8 U.S. grants (3 original + 5 continuations) · 1 pending application';
 
   const links = document.createElement('div');
   links.className = 'patent-number-links';
@@ -391,6 +392,14 @@ if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
   sharkNinjaSection.querySelector(':scope > .shell')?.append(block);
 }
 
+const academicProjectIds = new Set([
+  'sensorcraft',
+  'uav-launcher',
+  'matlab-heat-flux',
+  'zinc-air-battery',
+  'aero-uav'
+]);
+
 const expertiseSection = document.querySelector('#expertise');
 if (expertiseSection && !document.querySelector('.project-jump')) {
   const jump = document.createElement('section');
@@ -400,14 +409,14 @@ if (expertiseSection && !document.querySelector('.project-jump')) {
   const kicker = document.createElement('p');
   kicker.className = 'kicker';
   kicker.id = 'project-jump-title';
-  kicker.textContent = 'Projects';
+  kicker.textContent = 'Project shortcuts';
 
   const nav = document.createElement('nav');
   nav.className = 'project-jump-links';
-  nav.setAttribute('aria-label', 'Jump to project');
+  nav.setAttribute('aria-label', 'Jump to professional project');
 
   projectDefinitions.forEach(({ label, id }) => {
-    if (!document.getElementById(id)) return;
+    if (academicProjectIds.has(id) || !document.getElementById(id)) return;
     const link = document.createElement('a');
     link.href = `#${id}`;
     link.textContent = label;
@@ -415,7 +424,22 @@ if (expertiseSection && !document.querySelector('.project-jump')) {
   });
 
   jump.append(kicker, nav);
-  expertiseSection.after(jump);
+  (professionalSectionHeader || expertiseSection).after(jump);
+}
+
+const academicHeader = document.querySelector('#academic-projects .academic-group-header');
+if (academicHeader && !academicHeader.querySelector('.academic-project-links')) {
+  const nav = document.createElement('nav');
+  nav.className = 'project-jump-links academic-project-links';
+  nav.setAttribute('aria-label', 'Jump to academic or internship project');
+  projectDefinitions.forEach(({ label, id }) => {
+    if (!academicProjectIds.has(id) || !document.getElementById(id)) return;
+    const link = document.createElement('a');
+    link.href = `#${id}`;
+    link.textContent = label;
+    nav.append(link);
+  });
+  academicHeader.append(nav);
 }
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
