@@ -74,15 +74,15 @@
 }
 
 /*
- * Employer credibility strips sit directly beneath the two work-section
- * headers. They are decorative because every employer/institution is named
- * again in the project content below.
+ * Credibility strips beneath the two work-section headers. All brand assets
+ * are self-hosted in assets/logos/. Each background image keeps its natural
+ * aspect ratio; sizing is tuned by perceived visual weight rather than forcing
+ * every mark into the same raw dimensions.
  */
 .portfolio-section-heading::after,
 .academic-group-header::after {
   content: "";
   display: block;
-  height: 92px;
   margin: 27px 0 -27px;
   background-color: #fff;
   background-repeat: no-repeat;
@@ -91,23 +91,26 @@
 }
 
 .portfolio-section-heading::after {
+  height: 104px;
   background-image:
-    url("https://upload.wikimedia.org/wikipedia/commons/9/9d/SAI-Logo-Horizontal-Black_%281%29.png"),
-    url("https://upload.wikimedia.org/wikipedia/commons/8/85/Intel_logo_2023.svg"),
-    url("https://upload.wikimedia.org/wikipedia/commons/e/ea/SharkNinja_logo.svg"),
-    url("https://skysafe-web-assets.imgix.net/logocard.png?h=630&w=1200"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='60' viewBox='0 0 220 60'%3E%3Ctext x='0' y='40' font-family='Arial,sans-serif' font-size='30' font-weight='700' fill='%231d1d1f'%3EMAVinci%3C/text%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='60' viewBox='0 0 260 60'%3E%3Ctext x='0' y='39' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='%231d1d1f'%3EReverb Industrial%3C/text%3E%3C/svg%3E");
-  background-size: 165px auto, 88px auto, 155px auto, 142px auto, 118px 42px, 150px 40px;
-  background-position: 0 50%, 21% 50%, 39% 50%, 61% 50%, 81% 50%, 100% 50%;
+    url("assets/logos/shield-ai.png"),
+    url("assets/logos/skysafe.png"),
+    url("assets/logos/reverb.png"),
+    url("assets/logos/sharkninja.svg"),
+    url("assets/logos/intel.svg"),
+    url("assets/logos/mavinci.jpg");
+  background-size: 158px auto, 136px auto, 72px auto, 158px auto, 96px auto, 142px auto;
+  background-position: 0 50%, 20% 50%, 40% 50%, 60% 50%, 80% 50%, 100% 50%;
 }
 
 .academic-group-header::after {
+  height: 104px;
   background-image:
-    url("https://upload.wikimedia.org/wikipedia/commons/4/40/Univ_of_victoria_logo.png"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='60' viewBox='0 0 320 60'%3E%3Ctext x='0' y='26' font-family='Arial,sans-serif' font-size='21' font-weight='700' fill='%231d1d1f'%3EInstitute of Ocean Sciences%3C/text%3E%3Ctext x='0' y='48' font-family='Arial,sans-serif' font-size='13' fill='%236e6e73'%3EFisheries and Oceans Canada%3C/text%3E%3C/svg%3E");
-  background-size: 190px auto, 245px 54px;
-  background-position: 0 50%, 48% 50%;
+    url("assets/logos/cfar.png"),
+    url("assets/logos/uvic.png"),
+    url("assets/logos/uvic-aero.png");
+  background-size: 225px auto, 184px auto, 92px auto;
+  background-position: 0 50%, 50% 50%, 100% 50%;
 }
 
 /*
@@ -202,15 +205,22 @@
   margin-top: 22px;
 }
 
-/* Professional employer bands use the same brand marks as the credibility strip. */
+/*
+ * Company headers use the same offline brand assets as the strips above.
+ * Institute of Ocean Sciences intentionally stays as text because it has no
+ * distinct standalone identity mark.
+ */
 #work .company-header .kicker,
 .company-section:has(#flexstyle) .company-header .kicker,
 .company-section:has(#mission-control) .company-header .kicker,
 #skysafe-gen2 .single-company-band h2,
 #reverb-metal-printer .single-company-band h2,
-#cnc-mill .single-company-band h2 {
+#cnc-mill .single-company-band h2,
+.early-company-band:has(+ #sensorcraft) h2,
+.early-company-band:has(+ #zinc-air-battery) h2,
+.early-company-band:has(+ #aero-uav) h2 {
   display: block;
-  height: 58px;
+  height: 60px;
   overflow: hidden;
   color: transparent;
   font-size: 0;
@@ -221,28 +231,41 @@
 }
 
 #work .company-header .kicker {
-  width: min(260px, 70vw);
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/9d/SAI-Logo-Horizontal-Black_%281%29.png");
+  width: min(250px, 70vw);
+  background-image: url("assets/logos/shield-ai.png");
 }
 .company-section:has(#flexstyle) .company-header .kicker {
   width: min(245px, 70vw);
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/SharkNinja_logo.svg");
+  background-image: url("assets/logos/sharkninja.svg");
 }
 .company-section:has(#mission-control) .company-header .kicker {
   width: min(145px, 45vw);
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/8/85/Intel_logo_2023.svg");
+  background-image: url("assets/logos/intel.svg");
 }
 #skysafe-gen2 .single-company-band h2 {
-  width: min(230px, 68vw);
-  background-image: url("https://skysafe-web-assets.imgix.net/logocard.png?h=630&w=1200");
+  width: min(225px, 68vw);
+  background-image: url("assets/logos/skysafe.png");
 }
 #reverb-metal-printer .single-company-band h2 {
-  width: min(265px, 75vw);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='70' viewBox='0 0 320 70'%3E%3Ctext x='0' y='47' font-family='Arial,sans-serif' font-size='34' font-weight='700' fill='%231d1d1f'%3EReverb Industrial%3C/text%3E%3C/svg%3E");
+  width: min(78px, 26vw);
+  background-image: url("assets/logos/reverb.png");
 }
 #cnc-mill .single-company-band h2 {
-  width: min(200px, 60vw);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='70' viewBox='0 0 250 70'%3E%3Ctext x='0' y='47' font-family='Arial,sans-serif' font-size='38' font-weight='700' fill='%231d1d1f'%3EMAVinci%3C/text%3E%3C/svg%3E");
+  width: min(220px, 65vw);
+  background-image: url("assets/logos/mavinci.jpg");
+}
+
+.early-company-band:has(+ #sensorcraft) h2 {
+  width: min(285px, 78vw);
+  background-image: url("assets/logos/cfar.png");
+}
+.early-company-band:has(+ #zinc-air-battery) h2 {
+  width: min(235px, 70vw);
+  background-image: url("assets/logos/uvic.png");
+}
+.early-company-band:has(+ #aero-uav) h2 {
+  width: min(150px, 48vw);
+  background-image: url("assets/logos/uvic-aero.png");
 }
 
 /* Project Shortcuts is the single project index; redundant links under company names stay out of the UI. */
@@ -312,14 +335,14 @@
     margin-bottom: -23px;
   }
   .portfolio-section-heading::after {
-    height: 154px;
-    background-size: 118px auto, 64px auto, 112px auto, 105px auto, 92px 34px, 118px 34px;
+    height: 164px;
+    background-size: 116px auto, 102px auto, 58px auto, 116px auto, 70px auto, 104px auto;
     background-position: 0 28%, 50% 28%, 100% 28%, 0 76%, 50% 76%, 100% 76%;
   }
   .academic-group-header::after {
-    height: 116px;
-    background-size: 155px auto, 205px 48px;
-    background-position: 0 50%, 100% 50%;
+    height: 154px;
+    background-size: 174px auto, 142px auto, 76px auto;
+    background-position: 0 28%, 100% 28%, 50% 77%;
   }
 
   .expertise-grid {
@@ -349,8 +372,11 @@
   .company-section:has(#mission-control) .company-header .kicker,
   #skysafe-gen2 .single-company-band h2,
   #reverb-metal-printer .single-company-band h2,
-  #cnc-mill .single-company-band h2 {
-    height: 48px;
+  #cnc-mill .single-company-band h2,
+  .early-company-band:has(+ #sensorcraft) h2,
+  .early-company-band:has(+ #zinc-air-battery) h2,
+  .early-company-band:has(+ #aero-uav) h2 {
+    height: 50px;
   }
   .single-company-band,
   .early-company-band {
