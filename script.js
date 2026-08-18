@@ -15,6 +15,7 @@ const wordmark = document.querySelector('.wordmark');
 if (wordmark) {
   wordmark.textContent = 'Stephen Murphy';
   wordmark.setAttribute('aria-label', 'Stephen Murphy — back to top');
+  wordmark.href = '#';
 }
 
 const footer = document.querySelector('footer');
@@ -174,7 +175,7 @@ const flexStyleCopy = flexStyleHeading?.closest('.subproject-header')?.querySele
 if (flexStyleCopy) {
   flexStyleCopy.textContent = flexStyleCopy.textContent.replace(
     'I also have a design patent application under review for this innovative hair styling tool, which has been making waves in the market.',
-    'I am a named inventor on eight U.S. patents for this product, with one additional U.S. application pending; see the patents list below.'
+    'I am a named inventor on eight granted U.S. patents in this product's patent family, with one additional U.S. application pending; see the patents list below.'
   );
 }
 
@@ -200,8 +201,8 @@ if (sensorcraftProject) {
 }
 
 const roleCorrections = new Map([
-  ['Design of Boeing Sensorcraft for Aeroelastic Research', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
-  ['Pneumatic Launcher for <20 kg UAVs', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
+  ['Design of Boeing Sensorcraft for Aeroelastic Research', 'Centre for Aerospace Research · Mechanical Engineering Intern'],
+  ['Pneumatic Launcher for <20 kg UAVs', 'Centre for Aerospace Research · Mechanical Engineering Intern'],
   ['Oceanographic Heat Flux Modeling in MATLAB', 'Institute of Ocean Sciences · Oceanographic Modelling Intern'],
   ['Master of Engineering with a focus on Zinc-air Battery Modeling and Renewable Technologies', 'University of Victoria · Graduate Student'],
   ['Aircraft Design and Composite Construction', 'University of Victoria AERO Team · President & Aeronautical Lead']
@@ -274,25 +275,26 @@ document.querySelectorAll('.project-section').forEach((section) => {
   if (role) roleLine.textContent = role;
 });
 
-// Earlier work uses the same company-band convention. Consecutive projects at the same employer share one band.
-let previousEarlyCompany = '';
+// Earlier work uses the same Company · Job Title band convention as the rest of the portfolio.
+let previousEarlyContext = '';
 document.querySelectorAll('.early-project').forEach((project) => {
   const roleLine = project.querySelector('.early-copy .role-line');
   if (!roleLine) return;
   const { company, role } = splitRole(roleLine.textContent);
   if (!company) return;
 
-  if (company !== previousEarlyCompany) {
+  const context = role ? `${company} · ${role}` : company;
+  if (context !== previousEarlyContext) {
     const band = document.createElement('header');
     band.className = 'early-company-band';
     const companyName = document.createElement('h2');
-    companyName.textContent = company;
+    companyName.textContent = context;
     band.append(companyName);
     project.before(band);
   }
 
-  previousEarlyCompany = company;
-  if (role) roleLine.textContent = role;
+  previousEarlyContext = context;
+  roleLine.remove();
 });
 
 const projectDefinitions = [
@@ -371,7 +373,7 @@ if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
 
   const family = document.createElement('p');
   family.className = 'patent-family';
-  family.textContent = 'Hair care appliance — 8 granted U.S. patents · 1 pending U.S. application';
+  family.textContent = 'Hair care appliance patent family — 8 granted U.S. patents · 1 pending U.S. application';
 
   const links = document.createElement('div');
   links.className = 'patent-number-links';
