@@ -156,7 +156,7 @@ if (xbatHeading && xbatProject) {
     media.innerHTML = `
       <div class="carousel compact-carousel" data-carousel-track>
         <figure>
-          <img src="assets/projects/shield/military-aircraft.png" alt="Example environmental control and thermal management system for military aircraft" loading="lazy">
+          <img src="assets/projects/shield/military-aircraft.webp" alt="Example environmental control and thermal management system for military aircraft" loading="lazy">
           <figcaption>Example military-aircraft ECS / thermal-management system. Source: <a href="https://www.hughes-treitler.com/markets/military-aircraft" target="_blank" rel="noopener">Hughes-Treitler ↗</a></figcaption>
         </figure>
         <figure class="video-slide">
@@ -283,8 +283,27 @@ document.querySelectorAll('.project-section').forEach((section) => {
   if (role) roleLine.textContent = role;
 });
 
-// Academic and internship projects keep Company · Job Title directly above each project title.
+// Academic and internship projects use the same gray company-band hierarchy as professional work.
 document.querySelectorAll('.early-company-band').forEach((band) => band.remove());
+let previousEarlyCompany = '';
+document.querySelectorAll('.early-project').forEach((project) => {
+  const roleLine = project.querySelector('.early-copy .role-line');
+  if (!roleLine) return;
+  const { company, role } = splitRole(roleLine.textContent);
+  if (!company) return;
+
+  if (company !== previousEarlyCompany) {
+    const band = document.createElement('header');
+    band.className = 'early-company-band';
+    const companyName = document.createElement('h2');
+    companyName.textContent = company;
+    band.append(companyName);
+    project.before(band);
+  }
+
+  previousEarlyCompany = company;
+  if (role) roleLine.textContent = role;
+});
 
 const workSection = document.querySelector('#work');
 let professionalSectionHeader = document.querySelector('#professional-projects');
@@ -392,54 +411,75 @@ if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
   sharkNinjaSection.querySelector(':scope > .shell')?.append(block);
 }
 
-const academicProjectIds = new Set([
-  'sensorcraft',
-  'uav-launcher',
-  'matlab-heat-flux',
-  'zinc-air-battery',
-  'aero-uav'
-]);
+const projectGroups = [
+  {
+    name: 'Aerospace',
+    ids: [
+      'xbat-wing-fold',
+      'xbat-ecs',
+      'vbat',
+      'intel-fixed-wing',
+      'sensorcraft',
+      'uav-launcher',
+      'skysafe-gen2',
+      'aero-uav'
+    ]
+  },
+  {
+    name: 'Consumer Products',
+    ids: ['flexstyle', 'hyperair', 'speedstyle', 'smoothstyle']
+  },
+  {
+    name: 'Machine Design',
+    ids: ['reverb-metal-printer', 'cnc-mill']
+  },
+  {
+    name: 'Software & Modeling',
+    ids: ['mission-control', 'matlab-heat-flux', 'zinc-air-battery']
+  }
+];
 
+const projectById = new Map(projectDefinitions.map((project) => [project.id, project]));
 const expertiseSection = document.querySelector('#expertise');
 if (expertiseSection && !document.querySelector('.project-jump')) {
   const jump = document.createElement('section');
   jump.className = 'project-jump shell';
   jump.setAttribute('aria-labelledby', 'project-jump-title');
 
-  const kicker = document.createElement('p');
-  kicker.className = 'kicker';
-  kicker.id = 'project-jump-title';
-  kicker.textContent = 'Project shortcuts';
+  const title = document.createElement('h2');
+  title.className = 'project-jump-title';
+  title.id = 'project-jump-title';
+  title.textContent = 'Project Shortcuts';
 
-  const nav = document.createElement('nav');
-  nav.className = 'project-jump-links';
-  nav.setAttribute('aria-label', 'Jump to professional project');
+  const groups = document.createElement('div');
+  groups.className = 'project-shortcut-groups';
 
-  projectDefinitions.forEach(({ label, id }) => {
-    if (academicProjectIds.has(id) || !document.getElementById(id)) return;
-    const link = document.createElement('a');
-    link.href = `#${id}`;
-    link.textContent = label;
-    nav.append(link);
+  projectGroups.forEach(({ name, ids }) => {
+    const group = document.createElement('section');
+    group.className = 'project-shortcut-group';
+
+    const heading = document.createElement('h3');
+    heading.textContent = name;
+
+    const nav = document.createElement('nav');
+    nav.className = 'project-jump-links';
+    nav.setAttribute('aria-label', `${name} projects`);
+
+    ids.forEach((id) => {
+      const project = projectById.get(id);
+      if (!project || !document.getElementById(id)) return;
+      const link = document.createElement('a');
+      link.href = `#${id}`;
+      link.textContent = project.label;
+      nav.append(link);
+    });
+
+    group.append(heading, nav);
+    groups.append(group);
   });
 
-  jump.append(kicker, nav);
-  (professionalSectionHeader || expertiseSection).after(jump);
-}
-
-const academicHeader = document.querySelector('#academic-projects .academic-group-header');
-if (academicHeader && !academicHeader.querySelector('.academic-project-links')) {
-  const nav = document.createElement('nav');
-  nav.className = 'project-jump-links academic-project-links';
-  nav.setAttribute('aria-label', 'Jump to academic or internship project');
-  projectDefinitions.forEach(({ label, id }) => {
-    if (!academicProjectIds.has(id) || !document.getElementById(id)) return;
-    const link = document.createElement('a');
-    link.href = `#${id}`;
-    link.textContent = label;
-    nav.append(link);
-  });
-  academicHeader.append(nav);
+  jump.append(title, groups);
+  expertiseSection.after(jump);
 }
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
