@@ -1,0 +1,21 @@
+name: Fetch ECS source image
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download source image
+        run: |
+          mkdir -p out
+          curl -L --fail --retry 3 'https://media-exp1.licdn.com/dms/image/C4D22AQEjQhgS1VVzkg/feedshare-shrink_2048_1536/0/1656073495139?e=2147483647&t=O7BCqpmxoeXhPeGfHanvQd1AyOiUXsXBBZ4ruzDv9HY&v=beta' -o out/hughes-treitler-military-ecs.jpg
+          file out/hughes-treitler-military-ecs.jpg
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecs-image
+          path: out/hughes-treitler-military-ecs.jpg
