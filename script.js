@@ -50,7 +50,7 @@ const flexStyleCopy = flexStyleHeading?.closest('.subproject-header')?.querySele
 if (flexStyleCopy) {
   flexStyleCopy.textContent = flexStyleCopy.textContent.replace(
     'I also have a design patent application under review for this innovative hair styling tool, which has been making waves in the market.',
-    'I am a named inventor on three U.S. patents for this product, listed below.'
+    'I am a named inventor on eight U.S. patents for this product, with one additional U.S. application pending; see the patents list below.'
   );
 }
 
@@ -122,8 +122,14 @@ const sharkNinjaSection = Array.from(document.querySelectorAll('.company-section
 if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
   const patents = [
     { number: 'US 11,653,737 B1', url: 'https://patents.google.com/patent/US11653737B1/en' },
+    { number: 'US 11,832,700 B2', url: 'https://patents.google.com/patent/US11832700B2/en' },
     { number: 'US 12,225,995 B2', url: 'https://patents.google.com/patent/US12225995B2/en' },
-    { number: 'US 12,501,982 B2', url: 'https://patents.google.com/patent/US12501982B2/en' }
+    { number: 'US 12,501,982 B2', url: 'https://patents.google.com/patent/US12501982B2/en' },
+    { number: 'US 12,507,780 B2', url: 'https://patents.google.com/patent/US12507780B2/en' },
+    { number: 'US 12,507,781 B2', url: 'https://patents.google.com/patent/US12507781B2/en' },
+    { number: 'US 12,569,045 B2', url: 'https://patents.google.com/patent/US12569045B2/en' },
+    { number: 'US 12,569,046 B2', url: 'https://patents.google.com/patent/US12569046B2/en' },
+    { number: 'US 2025/0143433 A1 · Pending', url: 'https://patents.google.com/patent/US20250143433A1/en' }
   ];
 
   const block = document.createElement('section');
