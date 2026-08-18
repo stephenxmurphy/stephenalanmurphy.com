@@ -1,6 +1,20 @@
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
+const expertiseAdditions = {
+  'Programming & Simulation': 'Simcenter 3D',
+  'Mechanical Design': 'vibration analysis and isolation'
+};
+
+document.querySelectorAll('#expertise .expertise-grid > div').forEach((item) => {
+  const heading = item.querySelector('h2')?.textContent.trim();
+  const copy = item.querySelector('p');
+  const addition = expertiseAdditions[heading];
+  if (copy && addition && !copy.textContent.includes(addition)) {
+    copy.textContent = `${copy.textContent}, ${addition}`;
+  }
+});
+
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 document.querySelectorAll('[data-carousel]').forEach((carousel, carouselIndex) => {
