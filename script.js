@@ -175,7 +175,7 @@ const flexStyleCopy = flexStyleHeading?.closest('.subproject-header')?.querySele
 if (flexStyleCopy) {
   flexStyleCopy.textContent = flexStyleCopy.textContent.replace(
     'I also have a design patent application under review for this innovative hair styling tool, which has been making waves in the market.',
-    'I am a named inventor on eight granted U.S. patents in this product's patent family, with one additional U.S. application pending; see the patents list below.'
+    "I am a named inventor on eight granted U.S. patents in this product's patent family, with one additional U.S. application pending; see the patents list below."
   );
 }
 
