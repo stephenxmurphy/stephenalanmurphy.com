@@ -8,16 +8,50 @@
   align-items: center;
   gap: 14px;
 }
+.header-actions a[href*="Stephen_Murphy_Resume"] { order: 1; }
+.header-actions a[href^="mailto:"] { order: 2; }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
+.hero-actions a[href*="Stephen_Murphy_Resume"] { order: 1; }
+.hero-actions a[href^="mailto:"] { order: 2; }
 
-/* The company band already provides hierarchy, so keep section dividers consistent. */
+/* Keep the hierarchy consistent: company/context is secondary, project title is primary. */
 .company-section {
   border-top: 1px solid var(--line);
+}
+
+.company-header .kicker {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .065em;
+}
+
+.company-header h2 {
+  font-size: clamp(23px, 2.6vw, 30px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: 600;
+  color: #3f3f43;
+}
+
+.single-company-band,
+.early-company-band {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.single-company-band h2,
+.early-company-band h2 {
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 650;
 }
 
 .academic-group {
@@ -64,6 +98,15 @@
 
   .header-actions .header-link {
     font-size: 12px;
+  }
+
+  .company-header h2 {
+    font-size: 23px;
+  }
+
+  .single-company-band h2,
+  .early-company-band h2 {
+    font-size: 13px;
   }
 
   .academic-group-header {
