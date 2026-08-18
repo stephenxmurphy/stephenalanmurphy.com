@@ -43,8 +43,8 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 5px;
   align-items: end;
-  margin: 0 -24px;
-  padding: 28px 24px 20px;
+  margin: 0 -10px;
+  padding: 28px 10px 20px;
   background: #e9e9ed;
   border: 1px solid #d2d2d7;
   border-bottom: 0;
@@ -71,8 +71,8 @@
   font-size: 15px;
 }
 .company-project-links {
-  margin: 0 -24px 10px;
-  padding: 0 24px 24px;
+  margin: 0 -10px 10px;
+  padding: 0 10px 24px;
   background: #e9e9ed;
   border: 1px solid #d2d2d7;
   border-top: 0;
@@ -113,8 +113,8 @@
 
 .single-company-band,
 .early-company-band {
-  margin: 0 -24px 30px;
-  padding: 20px 24px;
+  margin: 0 -10px 30px;
+  padding: 20px 10px;
   background: #e9e9ed;
   border: 1px solid #d2d2d7;
   border-radius: 16px;
@@ -202,16 +202,16 @@
     border-top-width: 6px;
   }
   .company-header {
-    margin: 0 -8px;
-    padding: 22px 16px 18px;
+    margin: 0 -4px;
+    padding: 22px 4px 18px;
     border-radius: 14px 14px 0 0;
   }
   .company-summary {
     margin-top: 15px;
   }
   .company-project-links {
-    margin: 0 -8px 8px;
-    padding: 0 16px 18px;
+    margin: 0 -4px 8px;
+    padding: 0 4px 18px;
     border-radius: 0 0 14px 14px;
   }
   .company-project {
@@ -222,9 +222,9 @@
   }
   .single-company-band,
   .early-company-band {
-    margin-left: -8px;
-    margin-right: -8px;
-    padding: 17px 16px;
+    margin-left: -4px;
+    margin-right: -4px;
+    padding: 17px 4px;
     border-radius: 13px;
   }
   .single-company-band {
