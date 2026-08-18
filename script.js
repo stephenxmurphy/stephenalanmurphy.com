@@ -6,6 +6,18 @@ document.head.append(structureStylesheet);
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
+const wordmark = document.querySelector('.wordmark');
+if (wordmark) {
+  wordmark.textContent = 'Stephen Murphy';
+  wordmark.setAttribute('aria-label', 'Stephen Murphy — back to top');
+}
+
+const footer = document.querySelector('footer');
+if (footer) {
+  const trailingPortfolio = Array.from(footer.children).find((child) => child.textContent.trim() === 'Portfolio');
+  trailingPortfolio?.remove();
+}
+
 const primaryNav = document.querySelector('.site-header nav');
 const expertiseLink = primaryNav?.querySelector('a[href="#expertise"]');
 const projectsLink = primaryNav?.querySelector('a[href="#work"]');
@@ -41,6 +53,12 @@ const projectHeadings = () => Array.from(document.querySelectorAll(
 ));
 
 const findProjectHeading = (title) => projectHeadings().find((heading) => heading.textContent.trim() === title);
+const splitRole = (text) => {
+  const parts = text.split('·').map((part) => part.trim()).filter(Boolean);
+  return parts.length > 1
+    ? { company: parts[0], role: parts.slice(1).join(' · ') }
+    : { company: parts[0] || '', role: '' };
+};
 
 const reverbHeading = projectHeadings().find((heading) => heading.textContent.trim() === 'Design of Wire-based Metal 3D Printer');
 if (reverbHeading) reverbHeading.textContent = 'Wire-based Metal 3D Printer';
@@ -68,7 +86,7 @@ if (xbatHeading && xbatProject) {
 
   if (!document.querySelector('#xbat-ecs')) {
     const ecsProject = document.createElement('article');
-    ecsProject.className = 'company-project';
+    ecsProject.className = 'company-project text-and-media-project';
     ecsProject.id = 'xbat-ecs';
 
     const header = document.createElement('header');
@@ -77,7 +95,7 @@ if (xbatHeading && xbatProject) {
     const titleBlock = document.createElement('div');
     const role = document.createElement('p');
     role.className = 'role-line';
-    role.textContent = 'Shield AI · Sr. Staff Mechanical Engineer';
+    role.textContent = 'Sr. Staff Mechanical Engineer';
     const heading = document.createElement('h3');
     heading.textContent = 'X-BAT Hopper Prototype ECS';
     titleBlock.append(role, heading);
@@ -87,7 +105,20 @@ if (xbatHeading && xbatProject) {
     copy.textContent = 'Hopper is the first flight-ready prototype of the X-BAT vehicle which will be used to demonstrate the vertical take-off and landing of the X-BAT on the launch and recovery vehicle (LRV) at the end of 2026. Successful completion of this test will demonstrate the ability to achieve vertical take-off and landing of a fighter jet using a traditional jet engine, akin to how SpaceX proved that vertical take-off and landing was possible with rocket engines. By doing so, Shield AI will prove that fighter jets no longer need runways, which will have massive impacts on US air superiority for decades to come. On this Hopper prototype, I was responsible for the mechanical integration of the ECS (Environmental Cooling System) which included the mechanical design and analysis of a coolant tank, multiple heat exchangers, manifolds, plumbing, instrumentation, and cooling fans.';
 
     header.append(titleBlock, copy);
-    ecsProject.append(header);
+
+    const media = document.createElement('div');
+    media.className = 'carousel-wrap';
+    media.setAttribute('data-carousel', '');
+    media.innerHTML = `
+      <div class="carousel compact-carousel" data-carousel-track>
+        <figure class="video-slide">
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/17_P4x0k3XM?rel=0" title="X-BAT Hopper prototype" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          <figcaption>X-BAT Hopper prototype.</figcaption>
+        </figure>
+      </div>
+      <div class="carousel-controls"><span class="carousel-count" data-carousel-count>1 / 1</span><div><button type="button" data-carousel-prev aria-label="Previous Hopper ECS media">←</button><button type="button" data-carousel-next aria-label="Next Hopper ECS media">→</button></div></div>`;
+
+    ecsProject.append(header, media);
     xbatProject.after(ecsProject);
   }
 }
@@ -122,6 +153,69 @@ roleCorrections.forEach((role, title) => {
   const heading = findProjectHeading(title);
   const roleLine = heading?.closest('.early-copy')?.querySelector('.role-line');
   if (roleLine) roleLine.textContent = role;
+});
+
+// Company bands are company/context only. Roles live with the projects.
+document.querySelectorAll('.company-header .company-role').forEach((role) => role.remove());
+
+document.querySelectorAll('.company-section').forEach((section) => {
+  const company = section.querySelector('.company-header .kicker')?.textContent.trim() || '';
+  section.querySelectorAll('.company-project').forEach((project) => {
+    const header = project.querySelector('.subproject-header');
+    if (!header) return;
+
+    let roleLine = header.querySelector('.role-line');
+    if (!roleLine && company === 'SharkNinja') {
+      roleLine = document.createElement('p');
+      roleLine.className = 'role-line';
+      roleLine.textContent = 'Design Manager, AD & NPD';
+      const title = header.querySelector('h3');
+      title?.before(roleLine);
+    } else if (roleLine?.textContent.includes('·')) {
+      roleLine.textContent = splitRole(roleLine.textContent).role;
+    }
+  });
+});
+
+// Single-project employers get the same visual company-band cue without duplicating the project title.
+document.querySelectorAll('.project-section').forEach((section) => {
+  const shell = section.querySelector(':scope > .shell');
+  const header = shell?.querySelector(':scope > .project-header');
+  const roleLine = header?.querySelector('.role-line');
+  if (!shell || !header || !roleLine || shell.querySelector(':scope > .single-company-band')) return;
+
+  const { company, role } = splitRole(roleLine.textContent);
+  if (!company) return;
+
+  const band = document.createElement('header');
+  band.className = 'single-company-band';
+  const companyName = document.createElement('h2');
+  companyName.textContent = company;
+  band.append(companyName);
+  shell.insertBefore(band, header);
+
+  if (role) roleLine.textContent = role;
+});
+
+// Earlier work uses the same company-band convention. Consecutive projects at the same employer share one band.
+let previousEarlyCompany = '';
+document.querySelectorAll('.early-project').forEach((project) => {
+  const roleLine = project.querySelector('.early-copy .role-line');
+  if (!roleLine) return;
+  const { company, role } = splitRole(roleLine.textContent);
+  if (!company) return;
+
+  if (company !== previousEarlyCompany) {
+    const band = document.createElement('header');
+    band.className = 'early-company-band';
+    const companyName = document.createElement('h2');
+    companyName.textContent = company;
+    band.append(companyName);
+    project.before(band);
+  }
+
+  previousEarlyCompany = company;
+  if (role) roleLine.textContent = role;
 });
 
 const projectDefinitions = [
@@ -178,15 +272,15 @@ const sharkNinjaSection = Array.from(document.querySelectorAll('.company-section
 
 if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
   const patents = [
-    { number: 'US 11,653,737 B1', url: 'https://patents.google.com/patent/US11653737B1/en' },
-    { number: 'US 11,832,700 B2', url: 'https://patents.google.com/patent/US11832700B2/en' },
-    { number: 'US 12,225,995 B2', url: 'https://patents.google.com/patent/US12225995B2/en' },
-    { number: 'US 12,501,982 B2', url: 'https://patents.google.com/patent/US12501982B2/en' },
-    { number: 'US 12,507,780 B2', url: 'https://patents.google.com/patent/US12507780B2/en' },
-    { number: 'US 12,507,781 B2', url: 'https://patents.google.com/patent/US12507781B2/en' },
-    { number: 'US 12,569,045 B2', url: 'https://patents.google.com/patent/US12569045B2/en' },
-    { number: 'US 12,569,046 B2', url: 'https://patents.google.com/patent/US12569046B2/en' },
-    { number: 'US 2025/0143433 A1 · Pending', url: 'https://patents.google.com/patent/US20250143433A1/en' }
+    { number: '11,653,737', suffix: 'B1', url: 'https://patents.google.com/patent/US11653737B1/en' },
+    { number: '11,832,700', suffix: 'B2', url: 'https://patents.google.com/patent/US11832700B2/en' },
+    { number: '12,225,995', suffix: 'B2', url: 'https://patents.google.com/patent/US12225995B2/en' },
+    { number: '12,501,982', suffix: 'B2', url: 'https://patents.google.com/patent/US12501982B2/en' },
+    { number: '12,507,780', suffix: 'B2', url: 'https://patents.google.com/patent/US12507780B2/en' },
+    { number: '12,507,781', suffix: 'B2', url: 'https://patents.google.com/patent/US12507781B2/en' },
+    { number: '12,569,045', suffix: 'B2', url: 'https://patents.google.com/patent/US12569045B2/en' },
+    { number: '12,569,046', suffix: 'B2', url: 'https://patents.google.com/patent/US12569046B2/en' },
+    { number: '2025/0143433', suffix: 'A1 · pending', url: 'https://patents.google.com/patent/US20250143433A1/en' }
   ];
 
   const block = document.createElement('section');
@@ -198,27 +292,23 @@ if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
   heading.id = 'sharkninja-patents-title';
   heading.textContent = 'Patents';
 
-  const list = document.createElement('ul');
-  list.className = 'patent-list';
+  const family = document.createElement('p');
+  family.className = 'patent-family';
+  family.textContent = 'Hair care appliance — 8 granted U.S. patents · 1 pending U.S. application';
 
-  patents.forEach(({ number, url }) => {
-    const item = document.createElement('li');
+  const links = document.createElement('div');
+  links.className = 'patent-number-links';
+
+  patents.forEach(({ number, suffix, url }) => {
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
     link.rel = 'noopener';
-
-    const title = document.createElement('span');
-    title.textContent = 'Hair care appliance';
-    const patentNumber = document.createElement('span');
-    patentNumber.textContent = `${number} ↗`;
-
-    link.append(title, patentNumber);
-    item.append(link);
-    list.append(item);
+    link.textContent = `US ${number} ${suffix} ↗`;
+    links.append(link);
   });
 
-  block.append(heading, list);
+  block.append(heading, family, links);
   sharkNinjaSection.querySelector(':scope > .shell')?.append(block);
 }
 
