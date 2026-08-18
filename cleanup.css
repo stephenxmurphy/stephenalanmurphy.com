@@ -1,0 +1,72 @@
+.header-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* The company band already provides hierarchy, so keep section dividers consistent. */
+.company-section {
+  border-top: 1px solid var(--line);
+}
+
+.academic-group {
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+
+.academic-group-header {
+  padding-top: 68px;
+  padding-bottom: 10px;
+}
+
+.academic-group-header .kicker {
+  margin-bottom: 10px;
+}
+
+.academic-group-header h2 {
+  max-width: 900px;
+  margin-bottom: 0;
+  font-size: clamp(38px, 5vw, 58px);
+  line-height: 1;
+  letter-spacing: -.042em;
+  font-weight: 660;
+}
+
+.academic-group .earlier {
+  background: transparent;
+  padding-top: 18px;
+}
+
+.academic-group .outside {
+  background: transparent;
+}
+
+.carousel figcaption a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .header-actions {
+    gap: 9px;
+  }
+
+  .header-actions .header-link {
+    font-size: 12px;
+  }
+
+  .academic-group-header {
+    padding-top: 52px;
+  }
+
+  .academic-group-header h2 {
+    font-size: 38px;
+  }
+}
