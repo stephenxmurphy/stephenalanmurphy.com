@@ -1,6 +1,13 @@
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
+const primaryNav = document.querySelector('.site-header nav');
+const expertiseLink = primaryNav?.querySelector('a[href="#expertise"]');
+const projectsLink = primaryNav?.querySelector('a[href="#work"]');
+if (primaryNav && expertiseLink && projectsLink) {
+  primaryNav.insertBefore(expertiseLink, projectsLink);
+}
+
 const expertiseAdditions = {
   'Programming & Simulation': 'Simcenter 3D',
   'Mechanical Design': 'vibration analysis and isolation'
