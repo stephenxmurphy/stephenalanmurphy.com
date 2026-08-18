@@ -45,6 +45,15 @@ if (smoothStyleHeader && !smoothStyleHeader.querySelector('.project-copy')) {
   smoothStyleHeader.append(blurb);
 }
 
+const flexStyleHeading = findProjectHeading('Shark FlexStyle');
+const flexStyleCopy = flexStyleHeading?.closest('.subproject-header')?.querySelector('.project-copy');
+if (flexStyleCopy) {
+  flexStyleCopy.textContent = flexStyleCopy.textContent.replace(
+    'I also have a design patent application under review for this innovative hair styling tool, which has been making waves in the market.',
+    'I am a named inventor on three U.S. patents for this product, listed below.'
+  );
+}
+
 const roleCorrections = new Map([
   ['Design of Boeing Sensorcraft for Aeroelastic Research', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
   ['Pneumatic Launcher for <20 kg UAVs', 'University of Victoria Centre for Aerospace Research · Mechanical Engineering Intern'],
@@ -105,6 +114,50 @@ document.querySelectorAll('.company-section').forEach((section) => {
 
   header.after(nav);
 });
+
+const sharkNinjaSection = Array.from(document.querySelectorAll('.company-section')).find((section) =>
+  section.querySelector('.company-header .kicker')?.textContent.trim() === 'SharkNinja'
+);
+
+if (sharkNinjaSection && !document.querySelector('#sharkninja-patents')) {
+  const patents = [
+    { number: 'US 11,653,737 B1', url: 'https://patents.google.com/patent/US11653737B1/en' },
+    { number: 'US 12,225,995 B2', url: 'https://patents.google.com/patent/US12225995B2/en' },
+    { number: 'US 12,501,982 B2', url: 'https://patents.google.com/patent/US12501982B2/en' }
+  ];
+
+  const block = document.createElement('section');
+  block.className = 'patents-block';
+  block.id = 'sharkninja-patents';
+  block.setAttribute('aria-labelledby', 'sharkninja-patents-title');
+
+  const heading = document.createElement('h3');
+  heading.id = 'sharkninja-patents-title';
+  heading.textContent = 'Patents';
+
+  const list = document.createElement('ul');
+  list.className = 'patent-list';
+
+  patents.forEach(({ number, url }) => {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+
+    const title = document.createElement('span');
+    title.textContent = 'Hair care appliance';
+    const patentNumber = document.createElement('span');
+    patentNumber.textContent = `${number} ↗`;
+
+    link.append(title, patentNumber);
+    item.append(link);
+    list.append(item);
+  });
+
+  block.append(heading, list);
+  sharkNinjaSection.querySelector(':scope > .shell')?.append(block);
+}
 
 const expertiseSection = document.querySelector('#expertise');
 if (expertiseSection && !document.querySelector('.project-jump')) {
