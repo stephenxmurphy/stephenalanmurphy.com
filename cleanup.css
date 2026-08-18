@@ -74,6 +74,43 @@
 }
 
 /*
+ * Employer credibility strips sit directly beneath the two work-section
+ * headers. They are decorative because every employer/institution is named
+ * again in the project content below.
+ */
+.portfolio-section-heading::after,
+.academic-group-header::after {
+  content: "";
+  display: block;
+  height: 92px;
+  margin: 27px 0 -27px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 100vmax #fff;
+  clip-path: inset(0 -100vmax);
+}
+
+.portfolio-section-heading::after {
+  background-image:
+    url("https://upload.wikimedia.org/wikipedia/commons/9/9d/SAI-Logo-Horizontal-Black_%281%29.png"),
+    url("https://upload.wikimedia.org/wikipedia/commons/8/85/Intel_logo_2023.svg"),
+    url("https://upload.wikimedia.org/wikipedia/commons/e/ea/SharkNinja_logo.svg"),
+    url("https://skysafe-web-assets.imgix.net/logocard.png?h=630&w=1200"),
+    url("https://business.esa.int/sites/business/files/MAVinci%20Logo.jpg"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='60' viewBox='0 0 260 60'%3E%3Ctext x='0' y='39' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='%231d1d1f'%3EReverb Industrial%3C/text%3E%3C/svg%3E");
+  background-size: 165px auto, 88px auto, 155px auto, 142px auto, 138px auto, 150px 40px;
+  background-position: 0 50%, 21% 50%, 39% 50%, 61% 50%, 81% 50%, 100% 50%;
+}
+
+.academic-group-header::after {
+  background-image:
+    url("https://upload.wikimedia.org/wikipedia/commons/4/40/Univ_of_victoria_logo.png"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='60' viewBox='0 0 320 60'%3E%3Ctext x='0' y='26' font-family='Arial,sans-serif' font-size='21' font-weight='700' fill='%231d1d1f'%3EInstitute of Ocean Sciences%3C/text%3E%3Ctext x='0' y='48' font-family='Arial,sans-serif' font-size='13' fill='%236e6e73'%3EFisheries and Oceans Canada%3C/text%3E%3C/svg%3E");
+  background-size: 190px auto, 245px 54px;
+  background-position: 0 50%, 48% 50%;
+}
+
+/*
  * Expertise and project shortcuts share the same group-divider language:
  * simple top rules, whitespace, and no vertical cell borders.
  */
@@ -224,6 +261,22 @@
   }
   .academic-group-header {
     margin-top: 0;
+  }
+
+  .portfolio-section-heading::after,
+  .academic-group-header::after {
+    margin-top: 23px;
+    margin-bottom: -23px;
+  }
+  .portfolio-section-heading::after {
+    height: 154px;
+    background-size: 118px auto, 64px auto, 112px auto, 105px auto, 105px auto, 118px 34px;
+    background-position: 0 28%, 50% 28%, 100% 28%, 0 76%, 50% 76%, 100% 76%;
+  }
+  .academic-group-header::after {
+    height: 116px;
+    background-size: 155px auto, 205px 48px;
+    background-position: 0 50%, 100% 50%;
   }
 
   .expertise-grid {
