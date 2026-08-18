@@ -9,22 +9,31 @@ if (year) year.textContent = new Date().getFullYear();
 const primaryNav = document.querySelector('.site-header nav');
 const expertiseLink = primaryNav?.querySelector('a[href="#expertise"]');
 const projectsLink = primaryNav?.querySelector('a[href="#work"]');
+if (expertiseLink) expertiseLink.textContent = 'Areas of Expertise';
 if (primaryNav && expertiseLink && projectsLink) {
   primaryNav.insertBefore(expertiseLink, projectsLink);
 }
 
 const expertiseAdditions = {
-  'Programming & Simulation': 'Simcenter 3D',
-  'Mechanical Design': 'vibration analysis and isolation'
+  'Programming & Simulation': ['Simcenter 3D'],
+  'Mechanical Design': [
+    'vibration analysis and isolation',
+    'batteries',
+    'actuated systems',
+    'mechanisms',
+    'composites'
+  ]
 };
 
 document.querySelectorAll('#expertise .expertise-grid > div').forEach((item) => {
   const heading = item.querySelector('h2')?.textContent.trim();
   const copy = item.querySelector('p');
-  const addition = expertiseAdditions[heading];
-  if (copy && addition && !copy.textContent.includes(addition)) {
-    copy.textContent = `${copy.textContent}, ${addition}`;
-  }
+  const additions = expertiseAdditions[heading] || [];
+  additions.forEach((addition) => {
+    if (copy && !copy.textContent.toLowerCase().includes(addition.toLowerCase())) {
+      copy.textContent = `${copy.textContent}, ${addition}`;
+    }
+  });
 });
 
 const projectHeadings = () => Array.from(document.querySelectorAll(
@@ -35,6 +44,53 @@ const findProjectHeading = (title) => projectHeadings().find((heading) => headin
 
 const reverbHeading = projectHeadings().find((heading) => heading.textContent.trim() === 'Design of Wire-based Metal 3D Printer');
 if (reverbHeading) reverbHeading.textContent = 'Wire-based Metal 3D Printer';
+
+const xbatHeading = findProjectHeading('X-BAT');
+const xbatProject = xbatHeading?.closest('.company-project');
+if (xbatHeading && xbatProject) {
+  xbatHeading.textContent = 'X-BAT Wing-fold';
+
+  const xbatCopy = xbatProject.querySelector('.project-copy');
+  if (xbatCopy) {
+    xbatCopy.replaceChildren();
+    const paragraph = document.createElement('p');
+    paragraph.textContent = 'In my role as Sr. Staff Mechanical Engineer at Shield AI, I work on actuated systems and various mechanical integrations as part of the Mechanical Systems team. My biggest project to date has been the conceptual design and analysis of the X-BAT wing fold system, one of the most ambitious fighter jet wing fold systems in the last several decades. This wing fold system uses hydraulic actuators to fold a very large portion of the wingspan into an extremely small width and height to enable transport of the X-BAT vehicle on the most common US air force vehicles (C-5 and C-130). It has a double hinge design coupled to a large bell crank and dual hydraulic actuators to rotate each side of the wing through ~180 degrees of motion with each wing stacking on top of each other. For this project, I owned the entire wing fold system including mechanism design, planform impacts, door layouts and down-locks, structural lock-pins, actuator sizing, and hydraulic subsystem.';
+    xbatCopy.append(paragraph);
+  }
+
+  const xbatCarousel = xbatProject.querySelector('[data-carousel-track]');
+  if (xbatCarousel && !xbatCarousel.querySelector('iframe[src*="5OPhq1TAAxY"]')) {
+    const comparison = document.createElement('figure');
+    comparison.className = 'video-slide';
+    comparison.innerHTML = '<div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/5OPhq1TAAxY?start=35&rel=0" title="X-47B wing fold example" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><figcaption>The X-BAT wing fold system builds on the achievements of the X-47B design with notable improvements to folded span and folded package size.</figcaption>';
+    xbatCarousel.append(comparison);
+  }
+
+  if (!document.querySelector('#xbat-ecs')) {
+    const ecsProject = document.createElement('article');
+    ecsProject.className = 'company-project';
+    ecsProject.id = 'xbat-ecs';
+
+    const header = document.createElement('header');
+    header.className = 'subproject-header';
+
+    const titleBlock = document.createElement('div');
+    const role = document.createElement('p');
+    role.className = 'role-line';
+    role.textContent = 'Shield AI · Sr. Staff Mechanical Engineer';
+    const heading = document.createElement('h3');
+    heading.textContent = 'X-BAT Hopper Prototype ECS';
+    titleBlock.append(role, heading);
+
+    const copy = document.createElement('p');
+    copy.className = 'project-copy';
+    copy.textContent = 'Hopper is the first flight-ready prototype of the X-BAT vehicle which will be used to demonstrate the vertical take-off and landing of the X-BAT on the launch and recovery vehicle (LRV) at the end of 2026. Successful completion of this test will demonstrate the ability to achieve vertical take-off and landing of a fighter jet using a traditional jet engine, akin to how SpaceX proved that vertical take-off and landing was possible with rocket engines. By doing so, Shield AI will prove that fighter jets no longer need runways, which will have massive impacts on US air superiority for decades to come. On this Hopper prototype, I was responsible for the mechanical integration of the ECS (Environmental Cooling System) which included the mechanical design and analysis of a coolant tank, multiple heat exchangers, manifolds, plumbing, instrumentation, and cooling fans.';
+
+    header.append(titleBlock, copy);
+    ecsProject.append(header);
+    xbatProject.after(ecsProject);
+  }
+}
 
 const smoothStyleHeading = findProjectHeading('Shark SmoothStyle');
 const smoothStyleHeader = smoothStyleHeading?.closest('.subproject-header');
@@ -69,7 +125,8 @@ roleCorrections.forEach((role, title) => {
 });
 
 const projectDefinitions = [
-  { title: 'X-BAT', label: 'X-BAT', id: 'xbat' },
+  { title: 'X-BAT Wing-fold', label: 'X-BAT Wing-fold', id: 'xbat-wing-fold' },
+  { title: 'X-BAT Hopper Prototype ECS', label: 'X-BAT Hopper ECS', id: 'xbat-ecs' },
   { title: 'V-BAT Fixed Wing Aircraft', label: 'V-BAT', id: 'vbat' },
   { title: 'Gen 2 Counter-UAS Hardware', label: 'Gen 2 Counter-UAS', id: 'skysafe-gen2' },
   { title: 'Wire-based Metal 3D Printer', label: 'Metal 3D Printer', id: 'reverb-metal-printer' },
