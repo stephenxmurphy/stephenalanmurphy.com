@@ -1,0 +1,32 @@
+name: Run section hierarchy patch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'trigger-section-hierarchy.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply patch
+        run: python3 .github/scripts/section_hierarchy_patch.py
+      - name: Validate JavaScript
+        run: node --check script.js
+      - name: Commit changes
+        shell: bash
+        run: |
+          rm -f trigger-section-hierarchy.txt
+          rm -f .github/scripts/section_hierarchy_patch.py
+          rm -f .github/workflows/run-section-hierarchy.yml
+          rm -f .github/workflows/one-shot-section-hierarchy.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Clarify portfolio section hierarchy"
+          git push
