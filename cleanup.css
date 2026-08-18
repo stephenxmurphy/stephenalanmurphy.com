@@ -19,51 +19,63 @@
 .hero-actions a[href*="Stephen_Murphy_Resume"] { order: 1; }
 .hero-actions a[href^="mailto:"] { order: 2; }
 
-/* Major page sections are visually distinct from company bands. */
+/*
+ * Header hierarchy
+ * 1. Major portfolio sections: full-width charcoal band
+ * 2. Companies: full-width light-gray band
+ * 3. Projects: plain white content (defined in the base/project styles)
+ *
+ * The full-bleed backgrounds use box-shadow so the text itself stays on the
+ * same .shell alignment as the project content below it.
+ */
 .expertise > .kicker,
 .portfolio-section-heading,
 .academic-group-header {
-  background: var(--ink);
+  background: #242426;
   color: #fff;
-  border: 1px solid var(--ink);
-  border-radius: 18px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 0 0 100vmax #242426;
+  clip-path: inset(0 -100vmax);
 }
 
 .expertise > .kicker {
   display: block;
-  margin: 0 0 30px;
-  padding: 27px 30px;
+  margin: 0 0 32px;
+  padding: 28px 0 27px;
   color: #fff;
-  font-size: clamp(34px, 4.2vw, 50px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.04em;
+  font-size: clamp(48px, 5.4vw, 66px);
+  font-weight: 720;
+  line-height: .98;
+  letter-spacing: -.045em;
   text-transform: none;
 }
 
 .portfolio-section-heading,
 .academic-group-header {
-  margin-top: 72px;
-  margin-bottom: 30px;
-  padding: 27px 30px;
+  margin-top: 76px;
+  margin-bottom: 0;
+  padding: 28px 0 27px;
 }
 
 .portfolio-section-heading h2,
 .academic-group-header h2 {
   margin: 0;
   color: #fff;
-  font-size: clamp(34px, 4.2vw, 50px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.04em;
+  font-size: clamp(48px, 5.4vw, 66px);
+  font-weight: 720;
+  line-height: .98;
+  letter-spacing: -.045em;
 }
 
 /* One project index spans professional and academic work. */
 .project-jump {
-  padding: 8px 0 10px;
+  width: min(calc(100% - 56px), var(--max));
+  margin-inline: auto;
+  padding: 24px 0 52px;
 }
 .project-jump-title {
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   font-size: 25px;
   line-height: 1.1;
   letter-spacing: -.025em;
@@ -72,6 +84,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px 34px;
+  margin-left: 0;
 }
 .project-shortcut-group {
   min-width: 0;
@@ -86,28 +99,52 @@
   letter-spacing: .01em;
 }
 
-/* Company names always use the same gray parent-band treatment. */
+/* Company level: a quieter flat band, clearly above project headings. */
 .company-section {
-  border-top: 1px solid var(--line);
+  padding-top: 0;
+  border-top: 0;
+}
+.company-header,
+.single-company-band,
+.early-company-band {
+  margin-left: 0;
+  margin-right: 0;
+  background: #e9e9ed;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 0 0 100vmax #e9e9ed;
+  clip-path: inset(0 -100vmax);
+}
+.company-header {
+  padding: 28px 0 26px;
 }
 .company-header .kicker,
 .single-company-band h2,
 .early-company-band h2 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(30px, 3.7vw, 44px);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.035em;
+  font-size: clamp(44px, 4.8vw, 58px);
+  font-weight: 710;
+  line-height: .98;
+  letter-spacing: -.042em;
   text-transform: none;
 }
 .company-header h2 {
   display: none;
 }
+.company-header .company-summary {
+  margin-top: 22px;
+}
+.company-project-links {
+  margin-left: 0;
+  margin-right: 0;
+}
 .single-company-band,
 .early-company-band {
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding: 25px 0 23px;
+}
+.project-section:has(.single-company-band) {
+  padding-top: 0;
 }
 .early-company-band {
   display: block;
@@ -117,7 +154,7 @@
   background: var(--surface);
 }
 .academic-group-header {
-  margin-bottom: 30px;
+  margin-bottom: 0;
 }
 .academic-group .earlier {
   padding-top: 0;
@@ -136,37 +173,41 @@
   .header-actions .header-link {
     font-size: 12px;
   }
+
   .expertise > .kicker,
   .portfolio-section-heading h2,
   .academic-group-header h2 {
-    font-size: 34px;
-  }
-  .expertise > .kicker,
-  .portfolio-section-heading,
-  .academic-group-header {
-    border-radius: 14px;
+    font-size: 46px;
   }
   .expertise > .kicker {
-    padding: 22px 18px;
+    padding: 24px 0 23px;
   }
   .portfolio-section-heading,
   .academic-group-header {
-    margin-top: 52px;
-    margin-bottom: 24px;
-    padding: 22px 18px;
+    margin-top: 54px;
+    padding: 24px 0 23px;
+  }
+
+  .project-jump {
+    width: calc(100% - 28px);
+    padding-top: 22px;
+    padding-bottom: 44px;
   }
   .project-shortcut-groups {
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
+  .company-header {
+    padding: 23px 0 21px;
+  }
   .company-header .kicker,
   .single-company-band h2,
   .early-company-band h2 {
-    font-size: 32px;
+    font-size: 40px;
   }
   .single-company-band,
   .early-company-band {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 21px 0 19px;
   }
 }
