@@ -3,6 +3,8 @@ layoutStylesheet.rel = 'stylesheet';
 layoutStylesheet.href = 'page-overrides.css';
 document.head.append(layoutStylesheet);
 
+const emailHref = 'mailto:s_murphy@outlook.com';
+
 // Preserve old deep links from the former single-page portfolio.
 if (document.body.classList.contains('landing-page') && window.location.hash) {
   const hash = window.location.hash;
@@ -16,6 +18,86 @@ const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// Keep the same Resume + Email actions in the upper-right corner on every page.
+document.querySelectorAll('.site-header').forEach((header) => {
+  let actions = header.querySelector('.header-actions');
+  if (!actions) {
+    actions = document.createElement('div');
+    actions.className = 'header-actions';
+    header.append(actions);
+  }
+
+  const resume = header.querySelector('a.header-link[href*="Stephen_Murphy_Resume"]');
+  if (resume && resume.parentElement !== actions) actions.append(resume);
+  if (resume) resume.textContent = 'Resume';
+
+  let email = actions.querySelector('a[href^="mailto:"]');
+  if (!email) {
+    email = document.createElement('a');
+    email.className = 'header-link';
+    email.href = emailHref;
+    actions.append(email);
+  }
+  email.textContent = 'Email';
+});
+
+// Restore the academic page naming while leaving hobbies as a separate section.
+document.querySelectorAll('a[href="academic.html"]').forEach((link) => {
+  if (!link.closest('.contact-links')) link.textContent = 'Academic & Internship Projects';
+});
+
+if (document.body.classList.contains('academic-page')) {
+  document.title = 'Academic & Internship Projects — Stephen Murphy';
+  const title = document.querySelector('.page-hero h1');
+  if (title) title.textContent = 'Academic & Internship Projects';
+  const intro = document.querySelector('.page-hero > p:last-child');
+  if (intro) intro.textContent = 'University, internship, research, and graduate work from the earlier part of my engineering career.';
+
+  const hobbiesLink = document.querySelector('[data-company-link="bikes"]');
+  const hobbiesWordmark = hobbiesLink?.querySelector('.logo-progress-wordmark');
+  if (hobbiesWordmark) hobbiesWordmark.textContent = 'Hobbies';
+  if (hobbiesLink) hobbiesLink.setAttribute('aria-label', 'Hobbies');
+
+  const hobbiesKicker = document.querySelector('.bikes-intro .kicker');
+  if (hobbiesKicker) hobbiesKicker.textContent = 'Hobbies';
+}
+
+// Update the professional-page handoff to the renamed academic page.
+if (document.body.classList.contains('projects-page')) {
+  const next = document.querySelector('.contact');
+  const nextHeading = next?.querySelector('h2');
+  if (nextHeading) nextHeading.textContent = 'Academic & internship projects.';
+  const academicLink = next?.querySelector('a[href="academic.html"]');
+  if (academicLink) academicLink.textContent = 'Academic & Internship Projects →';
+}
+
+// Footer stays intentionally minimal on all pages.
+document.querySelectorAll('footer').forEach((footer) => {
+  Array.from(footer.children).slice(1).forEach((child) => child.remove());
+});
+
+// Attach stable logo classes and use the actual MAVinci brand mark.
+document.querySelectorAll('[data-company-link]').forEach((item) => {
+  const key = item.dataset.companyLink;
+  item.classList.add(`logo-${key}`);
+});
+
+const mavinciLink = document.querySelector('[data-company-link="mavinci"]');
+if (mavinciLink) {
+  const fallbackText = 'MAVinci';
+  const image = document.createElement('img');
+  image.src = 'https://business.esa.int/sites/business/files/MAVinci%20Logo.jpg';
+  image.alt = 'MAVinci';
+  image.loading = 'eager';
+  image.addEventListener('error', () => {
+    const fallback = document.createElement('span');
+    fallback.className = 'logo-progress-wordmark';
+    fallback.textContent = fallbackText;
+    mavinciLink.replaceChildren(fallback);
+  }, { once: true });
+  mavinciLink.replaceChildren(image);
+}
 
 // Highlight the company/institution whose projects are currently in view.
 const progressItems = Array.from(document.querySelectorAll('[data-company-link]'));
@@ -45,7 +127,7 @@ const setActiveCompany = (company) => {
 
 const updateCompanyProgress = () => {
   if (!companySections.length) return;
-  const marker = window.scrollY + 185;
+  const marker = window.scrollY + 190;
   let company = companySections[0].dataset.companySection;
   companySections.forEach((section) => {
     if (section.offsetTop <= marker) company = section.dataset.companySection;
@@ -87,19 +169,22 @@ document.querySelectorAll('[data-carousel]').forEach((carousel, carouselIndex) =
 
   if (count) count.setAttribute('aria-live', 'polite');
 
+  const slideLeft = (index) => {
+    const target = slides[index];
+    if (!target || !slides[0]) return 0;
+    return target.offsetLeft - slides[0].offsetLeft;
+  };
+
   const activeIndex = () => {
-    const trackLeft = track.getBoundingClientRect().left;
     let closest = 0;
     let distance = Infinity;
-
     slides.forEach((slide, index) => {
-      const delta = Math.abs(slide.getBoundingClientRect().left - trackLeft);
+      const delta = Math.abs(track.scrollLeft - slideLeft(index));
       if (delta < distance) {
         distance = delta;
         closest = index;
       }
     });
-
     return closest;
   };
 
@@ -111,15 +196,9 @@ document.querySelectorAll('[data-carousel]').forEach((carousel, carouselIndex) =
   };
 
   const goTo = (index) => {
-    const target = slides[Math.max(0, Math.min(index, slides.length - 1))];
-    if (!target) return;
-
-    const trackRect = track.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-    const left = track.scrollLeft + targetRect.left - trackRect.left;
-
+    const bounded = Math.max(0, Math.min(index, slides.length - 1));
     track.scrollTo({
-      left,
+      left: slideLeft(bounded),
       behavior: reduceMotion.matches ? 'auto' : 'smooth'
     });
   };
