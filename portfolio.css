@@ -12,28 +12,83 @@
   white-space: nowrap;
 }
 
-.page-hero {
-  padding: 76px 0 48px;
+.header-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.page-hero .kicker {
-  margin-bottom: 10px;
+.site-header .header-actions .header-link {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 650;
 }
-.page-hero h1 {
-  max-width: 980px;
-  margin-bottom: 14px;
-  font-size: clamp(50px, 6.5vw, 82px);
-  line-height: .98;
-  letter-spacing: -.052em;
-  font-weight: 680;
+.site-header .header-actions .header-link:hover {
+  opacity: .62;
 }
-.page-hero > p:last-child {
-  max-width: 760px;
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 17px;
+.cta-arrow {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: .78em;
+  line-height: 1;
+  transform: translateY(-.04em);
 }
 
 /* Landing page */
+.hero-with-photo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 320px);
+  gap: clamp(42px, 7vw, 92px);
+  align-items: center;
+}
+.hero-copy {
+  min-width: 0;
+}
+.hero-with-photo .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.welcome-blurb {
+  max-width: 760px;
+  margin-top: 28px;
+  color: #454549;
+  font-size: 17px;
+}
+.welcome-blurb p {
+  margin-bottom: 12px;
+}
+.welcome-blurb p:last-child {
+  margin-bottom: 0;
+}
+.welcome-blurb a {
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line-light);
+  border-radius: 24px;
+  background: #ececf0;
+}
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .expertise {
   padding-top: 34px;
 }
@@ -140,6 +195,31 @@
   color: var(--muted);
   font-size: 13px;
 }
+.next-section > p:not(.kicker) {
+  max-width: 700px;
+}
+
+/* Project-page hero */
+.page-hero {
+  padding: 76px 0 48px;
+}
+.page-hero .kicker {
+  margin-bottom: 10px;
+}
+.page-hero h1 {
+  max-width: 980px;
+  margin-bottom: 14px;
+  font-size: clamp(50px, 6.5vw, 82px);
+  line-height: .98;
+  letter-spacing: -.052em;
+  font-weight: 680;
+}
+.page-hero > p:last-child {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 17px;
+}
 
 /* Sticky company / institution progress bar */
 .logo-progress-wrap {
@@ -147,8 +227,8 @@
   top: 76px;
   z-index: 80;
   border-top: 1px solid rgba(0,0,0,.07);
-  border-bottom: 1px solid rgba(0,0,0,.09);
-  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.95);
   backdrop-filter: saturate(180%) blur(18px);
   -webkit-backdrop-filter: saturate(180%) blur(18px);
 }
@@ -160,11 +240,12 @@
 .logo-progress-item {
   position: relative;
   min-width: 0;
-  height: 66px;
+  height: 78px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 14px;
+  padding: 10px 16px;
+  overflow: hidden;
   opacity: .27;
   transition: opacity .18s ease, background .18s ease;
 }
@@ -189,16 +270,17 @@
 }
 .logo-progress-item img {
   display: block;
-  width: auto;
-  height: 34px;
+  width: min(150px, 100%);
+  height: 46px;
   max-width: 100%;
   object-fit: contain;
+  transform-origin: center;
 }
 .logo-progress-wordmark {
   display: inline-flex;
+  min-height: 46px;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
   color: var(--ink);
   font-size: 24px;
   font-weight: 720;
@@ -207,29 +289,82 @@
   white-space: nowrap;
 }
 .logo-progress-wordmark.compact {
-  max-width: 150px;
-  font-size: 12px;
-  font-weight: 680;
+  max-width: 174px;
+  min-height: 46px;
+  font-size: 16px;
+  font-weight: 720;
   letter-spacing: -.01em;
-  line-height: 1.15;
+  line-height: 1.06;
   text-align: center;
   white-space: normal;
 }
 
-/* Projects */
+/* Optical normalization for assets with built-in whitespace. */
+[data-company-link="skysafe"] img {
+  transform: scale(1.34);
+}
+[data-company-link="reverb"] img {
+  transform: scale(1.72);
+}
+[data-company-link="uvic-aero"] img {
+  transform: scale(1.62);
+}
+[data-company-link="mavinci"] img {
+  transform: scale(1.08);
+}
+
+/* Company chapters */
 .project-group {
   background: var(--surface);
+  scroll-margin-top: 154px;
 }
 .project-group + .project-group {
-  border-top: 1px solid var(--line);
+  border-top: 5px solid #c9c9cf;
 }
+.company-overview {
+  display: grid;
+  grid-template-columns: minmax(220px, .58fr) minmax(0, 1.42fr);
+  gap: 54px;
+  align-items: start;
+  padding: 42px 0 34px;
+  border-bottom: 1px solid var(--line-light);
+}
+.company-overview .kicker {
+  margin-bottom: 7px;
+}
+.company-overview h2 {
+  margin-bottom: 7px;
+  font-size: clamp(30px, 3.2vw, 42px);
+  line-height: 1;
+  letter-spacing: -.04em;
+  font-weight: 690;
+}
+.company-overview-role {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+.company-overview-copy {
+  max-width: 840px;
+}
+.company-overview-copy p {
+  margin-bottom: 12px;
+  color: #454549;
+  font-size: 16px;
+}
+.company-overview-copy p:last-child {
+  margin-bottom: 0;
+}
+
 .portfolio-project {
-  padding: 66px 0 72px;
+  padding: 58px 0 68px;
   border-top: 1px solid var(--line-light);
   scroll-margin-top: 154px;
 }
-.project-group > .shell > .portfolio-project:first-child,
-.project-group > .portfolio-project:first-child {
+.company-overview + .portfolio-project,
+.company-overview + .patents-block,
+.project-group > .shell > .portfolio-project:first-child {
   border-top: 0;
 }
 .project-header {
@@ -259,28 +394,11 @@
 .project-copy p:last-child {
   margin-bottom: 0;
 }
-.company-intro {
-  padding: 52px 0 28px;
-}
-.company-intro .role-line {
-  margin-bottom: 10px;
-}
-.company-intro-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 42px;
-  max-width: 1020px;
-}
-.company-intro-grid p {
-  margin: 0;
-  color: #454549;
-  font-size: 16px;
-}
 
 .patents-block {
   max-width: 980px;
-  padding: 24px 0 44px;
-  border-top: 1px solid var(--line-light);
+  padding: 28px 0 46px;
+  border-bottom: 1px solid var(--line-light);
 }
 .patents-block h2 {
   margin-bottom: 7px;
@@ -300,8 +418,8 @@
 }
 .patent-number-links a {
   display: inline-flex;
-  align-items: center;
   min-height: 32px;
+  align-items: center;
   padding: 0 10px;
   border: 1px solid var(--line-light);
   border-radius: 7px;
@@ -314,7 +432,7 @@
   background: var(--soft);
 }
 
-/* Smaller galleries keep the long project pages moving. */
+/* Galleries */
 .carousel-wrap {
   margin-top: 30px;
 }
@@ -324,6 +442,7 @@
 }
 .carousel figure {
   flex-basis: min(62vw, 720px);
+  scroll-snap-stop: always;
 }
 .carousel figure img,
 .video-frame {
@@ -343,8 +462,12 @@
 .mini-carousel .video-frame {
   height: min(30vw, 315px);
 }
+.carousel-controls button[data-carousel-prev]:not(:disabled),
+.carousel-controls button[data-carousel-next]:not(:disabled) {
+  cursor: pointer;
+}
 
-/* Academic page and bikes */
+/* Academic page and hobbies */
 .academic-projects {
   background: var(--surface);
 }
@@ -354,7 +477,7 @@
 }
 .bikes-section {
   padding: 68px 0 88px;
-  border-top: 1px solid var(--line);
+  border-top: 5px solid #c9c9cf;
   background: var(--surface);
   scroll-margin-top: 154px;
 }
@@ -376,21 +499,15 @@
   font-size: 16px;
 }
 
-/* No legacy company bands or shortcut navigation. */
-.company-header,
-.single-company-band,
-.early-company-band,
-.project-jump,
-.company-project-links {
-  display: none !important;
-}
-
-.carousel figcaption a {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+footer {
+  justify-content: flex-start;
 }
 
 @media (max-width: 1000px) {
+  .hero-with-photo {
+    grid-template-columns: minmax(0, 1fr) minmax(200px, 260px);
+    gap: 40px;
+  }
   .expertise-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -401,19 +518,40 @@
     grid-column: 1 / -1;
   }
   .project-header,
+  .company-overview,
   .bikes-intro {
     grid-template-columns: 1fr;
     gap: 18px;
   }
-  .company-intro-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .company-overview-copy {
+    max-width: 760px;
   }
 }
 
 @media (max-width: 720px) {
   .site-header {
     grid-template-columns: 1fr auto;
+  }
+  .header-actions {
+    gap: 6px;
+  }
+  .site-header .header-actions .header-link {
+    min-height: 31px;
+    padding: 0 9px;
+    font-size: 11px;
+  }
+  .hero-with-photo {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .hero-photo {
+    width: min(72vw, 300px);
+    justify-self: start;
+    border-radius: 20px;
+  }
+  .welcome-blurb {
+    margin-top: 23px;
+    font-size: 16px;
   }
   .page-hero {
     padding: 64px 0 38px;
@@ -440,6 +578,7 @@
   .highlight-grid {
     gap: 28px;
   }
+
   .logo-progress-wrap {
     top: 76px;
     overflow-x: auto;
@@ -451,21 +590,37 @@
   .logo-progress {
     width: max-content;
     min-width: 100%;
-    grid-template-columns: repeat(var(--logo-count), 132px);
+    grid-template-columns: repeat(var(--logo-count), 144px);
   }
   .logo-progress-item {
-    height: 58px;
-    padding: 9px 13px;
+    height: 64px;
+    padding: 8px 13px;
   }
   .logo-progress-item img {
-    height: 29px;
+    width: 126px;
+    height: 39px;
   }
   .logo-progress-wordmark {
-    min-height: 29px;
+    min-height: 39px;
     font-size: 21px;
   }
   .logo-progress-wordmark.compact {
-    font-size: 10px;
+    max-width: 124px;
+    min-height: 39px;
+    font-size: 13px;
+  }
+  [data-company-link="reverb"] img {
+    transform: scale(1.58);
+  }
+  [data-company-link="uvic-aero"] img {
+    transform: scale(1.50);
+  }
+
+  .company-overview {
+    padding: 34px 0 26px;
+  }
+  .company-overview h2 {
+    font-size: 32px;
   }
   .portfolio-project {
     padding: 50px 0 56px;
@@ -493,9 +648,6 @@
   .compact-carousel .video-frame,
   .mini-carousel .video-frame {
     height: 54vw;
-  }
-  .company-intro {
-    padding-top: 42px;
   }
   .bikes-section {
     padding: 52px 0 72px;

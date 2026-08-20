@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Academic Projects & Bikes — Stephen Murphy</title>
-  <meta name="description" content="Academic engineering projects, internships, graduate work, and bike builds by Stephen Murphy.">
+  <title>Academic &amp; Internship Projects — Stephen Murphy</title>
+  <meta name="description" content="Academic engineering projects, internships, graduate research, and hands-on hobbies by Stephen Murphy.">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="canonical" href="https://stephenalanmurphy.com/academic.html">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="cleanup.css">
+  <link rel="stylesheet" href="portfolio.css">
 </head>
 <body class="academic-page">
 <a class="skip-link" href="#cfar">Skip to academic projects</a>
@@ -17,25 +17,28 @@
   <nav aria-label="Primary navigation">
     <a href="index.html">Home</a>
     <a href="projects.html">Professional Projects</a>
-    <a href="academic.html" aria-current="page">Academic &amp; Bikes</a>
+    <a href="academic.html" aria-current="page">Academic &amp; Internship Projects</a>
   </nav>
-  <a class="header-link" href="assets/resume/Stephen_Murphy_Resume_2023.pdf" target="_blank" rel="noopener">Resume ↗</a>
+  <div class="header-actions">
+    <a class="header-link" href="assets/resume/Stephen_Murphy_Resume_2023.pdf" target="_blank" rel="noopener">Resume <span class="cta-arrow" aria-hidden="true">↗</span></a>
+    <a class="header-link" href="mailto:s_murphy@outlook.com">Email <span class="cta-arrow" aria-hidden="true">↗</span></a>
+  </div>
 </header>
 
 <main>
 <section class="page-hero shell">
   <p class="kicker">Portfolio</p>
-  <h1>Academic Projects &amp; Bikes</h1>
-  <p>University, internship, research, and hands-on personal work from the earlier part of my engineering career.</p>
+  <h1>Academic &amp; Internship Projects</h1>
+  <p>University, internship, research, and graduate work from the earlier part of my engineering career.</p>
 </section>
 
 <div class="logo-progress-wrap">
-  <nav class="logo-progress shell" style="--logo-count: 5" aria-label="Academic organizations and bike builds">
+  <nav class="logo-progress shell" style="--logo-count: 5" aria-label="Academic organizations and hobbies">
     <a class="logo-progress-item" data-company-link="cfar" href="#cfar" aria-label="Centre for Aerospace Research projects"><img src="assets/logos/cfar.png" alt="Centre for Aerospace Research"></a>
     <a class="logo-progress-item" data-company-link="ios" href="#ios" aria-label="Institute of Ocean Sciences project"><span class="logo-progress-wordmark compact">Institute of Ocean Sciences</span></a>
     <a class="logo-progress-item" data-company-link="uvic" href="#uvic" aria-label="University of Victoria graduate project"><img src="assets/logos/uvic.png" alt="University of Victoria"></a>
     <a class="logo-progress-item" data-company-link="uvic-aero" href="#uvic-aero" aria-label="UVic AERO project"><img src="assets/logos/uvic-aero.png" alt="UVic AERO"></a>
-    <a class="logo-progress-item" data-company-link="bikes" href="#bikes" aria-label="Bike builds"><span class="logo-progress-wordmark">Bikes</span></a>
+    <a class="logo-progress-item" data-company-link="bikes" href="#bikes" aria-label="Hobbies"><span class="logo-progress-wordmark">Hobbies</span></a>
   </nav>
 </div>
 
@@ -48,7 +51,7 @@
         <p class="project-copy">Given the outer shape of the aircraft, I designed all internal and external components of this joined-wing aircraft including the composite layup, internal structure, integrated electronics, and custom-machined 6061 interfaces to secure everything together. This 3 m wingspan, small-scale aircraft was used to develop a quantitative model of the buckling behavior of the aft wings in flight.</p>
       </header>
       <div class="carousel-wrap" data-carousel><div class="carousel mini-carousel" data-carousel-track>
-        <figure><img src="assets/projects/sensorcraft/cover.webp" alt="Boeing Sensorcraft" loading="lazy"><figcaption>The 3 m wingspan Boeing Sensorcraft where I designed the internal mechanical structure and components.</figcaption></figure>
+        <figure><img src="assets/projects/sensorcraft/assembled-render.webp" alt="Boeing Sensorcraft assembled render" loading="lazy"><figcaption>The assembled Boeing Sensorcraft model, showing the joined-wing configuration I designed the internal mechanical structure around.</figcaption></figure>
         <figure><img src="assets/projects/sensorcraft/internal-structure.webp" alt="Sensorcraft internal structure" loading="lazy"><figcaption>The lightweight CNC-machined internal fuselage structure integrated electrical mounting features and large bonding surfaces for the composite structure.</figcaption></figure>
       </div><div class="carousel-controls"><span class="carousel-count" data-carousel-count>1 / 2</span><div><button type="button" data-carousel-prev aria-label="Previous Sensorcraft image">←</button><button type="button" data-carousel-next aria-label="Next Sensorcraft image">→</button></div></div></div>
     </article>
@@ -124,7 +127,7 @@
 
 <section class="bikes-section" id="bikes" data-company-section="bikes">
   <div class="shell">
-    <div class="bikes-intro"><div><p class="kicker">Bikes</p><h2>And in my free time, I like to build bikes.</h2></div><p>Here are some examples of bikes I built from scratch using off-the-shelf frames and components. I do my own bike maintenance and enjoy riding whenever I can, rain or shine.</p></div>
+    <div class="bikes-intro"><div><p class="kicker">Hobbies</p><h2>And in my free time, I like to build bikes.</h2></div><p>Here are some examples of bikes I built from scratch using off-the-shelf frames and components. I do my own bike maintenance and enjoy riding whenever I can, rain or shine.</p></div>
     <div class="carousel-wrap" data-carousel><div class="carousel mini-carousel" data-carousel-track>
       <figure><img src="assets/projects/bikes/aluminum-road-bike.webp" alt="Aluminum road bike" loading="lazy"><figcaption>The first road bike I built using an aluminum frame.</figcaption></figure>
       <figure><img src="assets/projects/bikes/carbon-frame-paint.webp" alt="Carbon bike frame being painted" loading="lazy"><figcaption>My carbon road-bike frame drying after a new coat of paint.</figcaption></figure>
@@ -142,7 +145,7 @@
 </section>
 </main>
 
-<footer class="shell"><span>© <span id="year"></span> Stephen Murphy</span><span><a href="index.html">Home</a> · <a href="projects.html">Professional Projects</a></span></footer>
+<footer class="shell"><span>© <span id="year"></span> Stephen Murphy</span></footer>
 <script src="script.js"></script>
 </body>
 </html>

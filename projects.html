@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#f5f5f7">
   <link rel="canonical" href="https://stephenalanmurphy.com/projects.html">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="cleanup.css">
+  <link rel="stylesheet" href="portfolio.css">
 </head>
 <body class="projects-page">
 <a class="skip-link" href="#shield-ai">Skip to projects</a>
@@ -17,9 +17,12 @@
   <nav aria-label="Primary navigation">
     <a href="index.html">Home</a>
     <a href="projects.html" aria-current="page">Professional Projects</a>
-    <a href="academic.html">Academic &amp; Bikes</a>
+    <a href="academic.html">Academic &amp; Internship Projects</a>
   </nav>
-  <a class="header-link" href="assets/resume/Stephen_Murphy_Resume_2023.pdf" target="_blank" rel="noopener">Resume ↗</a>
+  <div class="header-actions">
+    <a class="header-link" href="assets/resume/Stephen_Murphy_Resume_2023.pdf" target="_blank" rel="noopener">Resume <span class="cta-arrow" aria-hidden="true">↗</span></a>
+    <a class="header-link" href="mailto:s_murphy@outlook.com">Email <span class="cta-arrow" aria-hidden="true">↗</span></a>
+  </div>
 </header>
 
 <main>
@@ -36,12 +39,23 @@
     <a class="logo-progress-item" data-company-link="reverb" href="#reverb" aria-label="Reverb Industrial project"><img src="assets/logos/reverb.png" alt="Reverb Industrial"></a>
     <a class="logo-progress-item" data-company-link="sharkninja" href="#sharkninja" aria-label="SharkNinja projects"><img src="assets/logos/sharkninja.svg" alt="SharkNinja"></a>
     <a class="logo-progress-item" data-company-link="intel" href="#intel" aria-label="Intel projects"><img src="assets/logos/intel.svg" alt="Intel"></a>
-    <a class="logo-progress-item" data-company-link="mavinci" href="#mavinci" aria-label="MAVinci project"><span class="logo-progress-wordmark">MAVinci</span></a>
+    <a class="logo-progress-item" data-company-link="mavinci" href="#mavinci" aria-label="MAVinci project"><img src="https://business.esa.int/sites/business/files/MAVinci%20Logo.jpg" alt="MAVinci"></a>
   </nav>
 </div>
 
 <section class="project-group" id="shield-ai" data-company-section="shield-ai">
   <div class="shell">
+    <header class="company-overview">
+      <div class="company-overview-heading">
+        <p class="kicker">Company</p>
+        <h2>Shield AI</h2>
+        <p class="company-overview-role">Staff / Sr. Staff Mechanical Engineer</p>
+      </div>
+      <div class="company-overview-copy">
+        <p>At Shield AI, I have owned major mechanical systems and integrations across autonomous fixed-wing aircraft, including X-BAT wing-fold and environmental cooling hardware as well as V-BAT wing and fuselage modules.</p>
+      </div>
+    </header>
+
     <article class="portfolio-project" id="xbat-wing-fold">
       <header class="project-header">
         <div class="project-heading"><p class="role-line">Shield AI · Sr. Staff Mechanical Engineer</p><h2>X-BAT Wing-fold</h2></div>
@@ -90,6 +104,17 @@
 
 <section class="project-group" id="skysafe" data-company-section="skysafe">
   <div class="shell">
+    <header class="company-overview">
+      <div class="company-overview-heading">
+        <p class="kicker">Company</p>
+        <h2>SkySafe</h2>
+        <p class="company-overview-role">Mechanical Design Manager</p>
+      </div>
+      <div class="company-overview-copy">
+        <p>At SkySafe, I led mechanical design and program management for next-generation counter-UAS hardware, integrating compute, RF electronics, antennas, thermal management, and ruggedized mechanical systems.</p>
+      </div>
+    </header>
+
     <article class="portfolio-project" id="skysafe-gen2">
       <header class="project-header">
         <div class="project-heading"><p class="role-line">SkySafe · Mechanical Design Manager</p><h2>Gen 2 Counter-UAS Hardware</h2></div>
@@ -105,6 +130,17 @@
 
 <section class="project-group" id="reverb" data-company-section="reverb">
   <div class="shell">
+    <header class="company-overview">
+      <div class="company-overview-heading">
+        <p class="kicker">Company</p>
+        <h2>Reverb Industrial</h2>
+        <p class="company-overview-role">Sr. Systems Engineer</p>
+      </div>
+      <div class="company-overview-copy">
+        <p>At Reverb Industrial, I owned system architecture plus mechanical and electrical design for the Alpha prototype of a wire-based metal additive-manufacturing platform.</p>
+      </div>
+    </header>
+
     <article class="portfolio-project" id="reverb-metal-printer">
       <header class="project-header">
         <div class="project-heading"><p class="role-line">Reverb Industrial · Sr. Systems Engineer</p><h2>Wire-based Metal 3D Printer</h2></div>
@@ -123,10 +159,17 @@
 
 <section class="project-group" id="sharkninja" data-company-section="sharkninja">
   <div class="shell">
-    <div class="company-intro">
-      <p class="role-line">SharkNinja · Design Manager, Advanced &amp; New Product Development</p>
-      <div class="company-intro-grid"><p>At SharkNinja, I led development of Shark's new Personal Care consumer products from proof-of-concept to mass production. I designed the Shark HyperAir, FlexStyle, SpeedStyle, and SmoothStyle—the first products under the Shark Beauty brand.</p><p>The success of these products resulted in my promotion to lead the new Personal Care engineering team in the U.S., responsible for both Advanced and New Product Development engineering.</p></div>
-    </div>
+    <header class="company-overview">
+      <div class="company-overview-heading">
+        <p class="kicker">Company</p>
+        <h2>SharkNinja</h2>
+        <p class="company-overview-role">Design Manager, Advanced &amp; New Product Development</p>
+      </div>
+      <div class="company-overview-copy">
+        <p>At SharkNinja, I led development of Shark's new Personal Care consumer products from proof-of-concept to mass production. I designed the Shark HyperAir, FlexStyle, SpeedStyle, and SmoothStyle—the first products under the Shark Beauty brand.</p>
+        <p>The success of these products resulted in my promotion to lead the new Personal Care engineering team in the U.S., responsible for both Advanced and New Product Development engineering.</p>
+      </div>
+    </header>
 
     <section class="patents-block" id="sharkninja-patents" aria-labelledby="sharkninja-patents-title">
       <h2 id="sharkninja-patents-title">Patents</h2>
@@ -179,6 +222,17 @@
 
 <section class="project-group" id="intel" data-company-section="intel">
   <div class="shell">
+    <header class="company-overview">
+      <div class="company-overview-heading">
+        <p class="kicker">Company</p>
+        <h2>Intel</h2>
+        <p class="company-overview-role">Mechanical Engineering Lead / Engineering Manager</p>
+      </div>
+      <div class="company-overview-copy">
+        <p>After Intel acquired MAVinci, I led distributed mechanical and aeronautical teams developing fixed-wing UAS hardware, then managed a 9+ engineer software team building Intel Mission Control for flight planning and live drone control.</p>
+      </div>
+    </header>
+
     <article class="portfolio-project" id="mission-control">
       <header class="project-header">
         <div class="project-heading"><p class="role-line">Intel · Engineering Manager and Software Developer</p><h2>Drone Flight Planning and Control</h2></div>
@@ -211,6 +265,17 @@
 
 <section class="project-group" id="mavinci" data-company-section="mavinci">
   <div class="shell">
+    <header class="company-overview">
+      <div class="company-overview-heading">
+        <p class="kicker">Company</p>
+        <h2>MAVinci</h2>
+        <p class="company-overview-role">Mechanical Engineer</p>
+      </div>
+      <div class="company-overview-copy">
+        <p>At MAVinci, I worked on fixed-wing UAV development and rapid prototyping. A key enabling project was the large custom CNC router I designed and built to accelerate airframe iteration from weeks to days.</p>
+      </div>
+    </header>
+
     <article class="portfolio-project" id="cnc-mill">
       <header class="project-header">
         <div class="project-heading"><p class="role-line">MAVinci · Mechanical Engineer</p><h2>3-axis CNC Mill Design and Construction</h2></div>
@@ -226,12 +291,12 @@
 
 <section class="contact shell">
   <p class="kicker">Next</p>
-  <h2>Academic projects and bike builds.</h2>
-  <div class="contact-links"><a href="academic.html">Academic &amp; Bikes →</a><a href="index.html">Back to Home</a></div>
+  <h2>Academic &amp; internship projects.</h2>
+  <div class="contact-links"><a href="academic.html">Academic &amp; Internship Projects →</a><a href="index.html">Back to Home</a></div>
 </section>
 </main>
 
-<footer class="shell"><span>© <span id="year"></span> Stephen Murphy</span><span><a href="index.html">Home</a> · <a href="academic.html">Academic &amp; Bikes</a></span></footer>
+<footer class="shell"><span>© <span id="year"></span> Stephen Murphy</span></footer>
 <script src="script.js"></script>
 </body>
 </html>
