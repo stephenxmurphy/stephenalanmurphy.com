@@ -93,6 +93,7 @@
   padding-top: 34px;
 }
 .expertise > .kicker,
+.career-summary > .kicker,
 .highlights > .kicker {
   display: block;
   margin: 0 0 28px;
@@ -151,6 +152,52 @@
   color: var(--muted);
   font-size: 12px;
   line-height: 1.4;
+}
+
+.career-summary {
+  padding: 22px 0 76px;
+}
+.career-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #c7c7cc;
+}
+.career-list li {
+  display: grid;
+  grid-template-columns: 170px minmax(260px, .95fr) 110px minmax(260px, 1.05fr);
+  gap: 18px 26px;
+  align-items: baseline;
+  padding: 17px 0 18px;
+  border-bottom: 1px solid #c7c7cc;
+}
+.career-list h2,
+.career-list p {
+  margin: 0;
+}
+.career-list h2 {
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.career-list h2 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.career-role {
+  color: #454549;
+  font-size: 14px;
+  font-weight: 600;
+}
+.career-dates {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.career-focus {
+  color: var(--muted);
+  font-size: 14px;
 }
 
 .highlights {
@@ -327,11 +374,7 @@
   border-top: 5px solid #c9c9cf;
 }
 .company-overview {
-  display: grid;
-  grid-template-columns: minmax(220px, .58fr) minmax(0, 1.42fr);
-  gap: 54px;
-  align-items: start;
-  padding: 42px 0 34px;
+  padding: 34px 0 28px;
   border-bottom: 1px solid var(--line-light);
 }
 .company-overview .kicker {
@@ -349,17 +392,6 @@
   color: var(--muted);
   font-size: 13px;
   font-weight: 600;
-}
-.company-overview-copy {
-  max-width: 840px;
-}
-.company-overview-copy p {
-  margin-bottom: 12px;
-  color: #454549;
-  font-size: 16px;
-}
-.company-overview-copy p:last-child {
-  margin-bottom: 0;
 }
 
 .portfolio-project {
@@ -522,14 +554,17 @@ footer {
   .education-summary h2 {
     grid-column: 1 / -1;
   }
+  .career-list li {
+    grid-template-columns: 150px minmax(0, 1fr) 100px;
+    gap: 6px 22px;
+  }
+  .career-focus {
+    grid-column: 2 / -1;
+  }
   .project-header,
-  .company-overview,
   .bikes-intro {
     grid-template-columns: 1fr;
     gap: 18px;
-  }
-  .company-overview-copy {
-    max-width: 760px;
   }
 }
 
@@ -565,6 +600,7 @@ footer {
     font-size: clamp(44px, 13vw, 64px);
   }
   .expertise > .kicker,
+  .career-summary > .kicker,
   .highlights > .kicker {
     padding: 22px 0 21px;
     font-size: 42px;
@@ -576,6 +612,32 @@ footer {
   }
   .education-summary h2 {
     grid-column: auto;
+  }
+  .career-summary {
+    padding-bottom: 58px;
+  }
+  .career-list li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 3px 16px;
+    padding: 15px 0 16px;
+  }
+  .career-list h2 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .career-dates {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .career-role,
+  .career-focus {
+    grid-column: 1 / -1;
+  }
+  .career-role {
+    margin-top: 2px;
+  }
+  .career-focus {
+    margin-top: 3px;
   }
   .highlights {
     padding-bottom: 62px;
@@ -627,7 +689,7 @@ footer {
   }
 
   .company-overview {
-    padding: 34px 0 26px;
+    padding: 30px 0 24px;
   }
   .company-overview h2 {
     font-size: 32px;
