@@ -234,8 +234,13 @@
 }
 .logo-progress {
   display: grid;
-  grid-template-columns: repeat(var(--logo-count), minmax(0, 1fr));
   align-items: stretch;
+}
+.projects-page .logo-progress {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.academic-page .logo-progress {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 .logo-progress-item {
   position: relative;
@@ -590,7 +595,12 @@ footer {
   .logo-progress {
     width: max-content;
     min-width: 100%;
-    grid-template-columns: repeat(var(--logo-count), 144px);
+  }
+  .projects-page .logo-progress {
+    grid-template-columns: repeat(6, 144px);
+  }
+  .academic-page .logo-progress {
+    grid-template-columns: repeat(5, 144px);
   }
   .logo-progress-item {
     height: 64px;
