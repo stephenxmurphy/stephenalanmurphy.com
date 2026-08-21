@@ -189,6 +189,14 @@
   font-size: 14px;
   font-weight: 600;
 }
+.promotion-label {
+  margin-right: 5px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
 .career-dates {
   color: var(--muted);
   font-size: 13px;
@@ -365,7 +373,7 @@
   transform: scale(1.08);
 }
 
-/* Company chapters */
+/* Project company sections */
 .project-group {
   background: var(--surface);
   scroll-margin-top: 154px;
@@ -373,34 +381,12 @@
 .project-group + .project-group {
   border-top: 5px solid #c9c9cf;
 }
-.company-overview {
-  padding: 34px 0 28px;
-  border-bottom: 1px solid var(--line-light);
-}
-.company-overview .kicker {
-  margin-bottom: 7px;
-}
-.company-overview h2 {
-  margin-bottom: 7px;
-  font-size: clamp(30px, 3.2vw, 42px);
-  line-height: 1;
-  letter-spacing: -.04em;
-  font-weight: 690;
-}
-.company-overview-role {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-}
 
 .portfolio-project {
   padding: 58px 0 68px;
   border-top: 1px solid var(--line-light);
   scroll-margin-top: 154px;
 }
-.company-overview + .portfolio-project,
-.company-overview + .patents-block,
 .project-group > .shell > .portfolio-project:first-child {
   border-top: 0;
 }
@@ -434,7 +420,7 @@
 
 .patents-block {
   max-width: 980px;
-  padding: 28px 0 46px;
+  padding: 42px 0 46px;
   border-bottom: 1px solid var(--line-light);
 }
 .patents-block h2 {
@@ -688,12 +674,6 @@ footer {
     transform: scale(1.50);
   }
 
-  .company-overview {
-    padding: 30px 0 24px;
-  }
-  .company-overview h2 {
-    font-size: 32px;
-  }
   .portfolio-project {
     padding: 50px 0 56px;
     scroll-margin-top: 142px;
