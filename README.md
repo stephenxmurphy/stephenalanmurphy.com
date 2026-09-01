@@ -19,11 +19,36 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000`.
 
+Run the repository's link, metadata, and asset checks with:
+
+```bash
+python3 scripts/check_site.py
+```
+
+The site also includes `wrangler.jsonc` for Cloudflare's production-equivalent
+static-assets runtime. To preview that behavior (including the custom 404 page
+and `_headers` rules), run:
+
+```bash
+npx wrangler@latest dev --persist-to /tmp/stephenalanmurphy-wrangler
+```
+
 ## Deployment
 
 Production deploys from the `main` branch through Cloudflare Workers static assets / Git integration.
 
 There is no framework build step; the repository root is the static site.
+
+Cloudflare Workers Builds should use the repository root, no build command, and
+the default deploy command (`npx wrangler deploy`). The Worker name must remain
+`stephenalanmurphy` to match `wrangler.jsonc`.
+
+Production domain routing is intentionally not declared in the repository yet.
+First verify the deployed `workers.dev` site, then attach
+`stephenalanmurphy.com` as the Worker's Custom Domain. Redirect
+`www.stephenalanmurphy.com` to the apex with a Cloudflare Redirect Rule and a
+proxied placeholder DNS record. Confirm the edge certificate is active and
+enable Always Use HTTPS before retiring Wix hosting.
 
 ## Rollback
 

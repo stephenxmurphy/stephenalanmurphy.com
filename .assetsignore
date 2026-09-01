@@ -1,3 +1,10 @@
+**/.git
+**/.gitignore
+**/.DS_Store
+**/.wrangler
 README.md
+CONTENT.md
 assets/ASSET_MAP.md
+scripts/
+wrangler.jsonc
 6659387_ALT.jpeg
