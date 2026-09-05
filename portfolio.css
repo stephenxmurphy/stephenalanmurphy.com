@@ -33,6 +33,16 @@
 .site-header .header-actions .header-link:hover {
   opacity: .62;
 }
+.site-header .header-actions .social-icon-link {
+  width: 34px;
+  padding: 0;
+  justify-content: center;
+}
+.social-icon-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
 .cta-arrow {
   display: inline-block;
   margin-left: 3px;
@@ -279,17 +289,29 @@
 /* Sticky company / institution progress bar */
 .logo-progress-wrap {
   position: sticky;
-  top: 76px;
-  z-index: 80;
-  border-top: 1px solid rgba(0,0,0,.07);
-  border-bottom: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.95);
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  top: 65px;
+  z-index: 90;
+  width: min(calc(100% - 24px), 1300px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+  border-top: 0;
+  border-radius: 0 0 16px 16px;
+  background: rgba(250,250,252,.92);
+  box-shadow: 0 14px 30px rgba(0,0,0,.08);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 .logo-progress {
   display: grid;
   align-items: stretch;
+  width: 100%;
+  margin: 0;
+}
+.projects-page .site-header,
+.academic-page .site-header {
+  border-bottom-color: rgba(0,0,0,.04);
+  border-radius: 16px 16px 0 0;
 }
 .projects-page .logo-progress {
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -300,7 +322,7 @@
 .logo-progress-item {
   position: relative;
   min-width: 0;
-  height: 78px;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -635,7 +657,7 @@ footer {
   }
 
   .logo-progress-wrap {
-    top: 76px;
+    top: 65px;
     overflow-x: auto;
     scrollbar-width: none;
   }
