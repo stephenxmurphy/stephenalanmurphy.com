@@ -97,6 +97,9 @@ document.querySelectorAll('[data-carousel]').forEach((carousel, carouselIndex) =
 
   if (!track || !slides.length) return;
 
+  const singleSlide = slides.length === 1;
+  carousel.classList.toggle('is-single-slide', singleSlide);
+
   track.setAttribute('role', 'region');
   track.setAttribute('aria-roledescription', 'carousel');
   track.setAttribute('aria-label', `Project media carousel ${carouselIndex + 1}`);
@@ -113,12 +116,15 @@ document.querySelectorAll('[data-carousel]').forEach((carousel, carouselIndex) =
   let currentIndex = 0;
 
   const nearestIndex = () => {
-    const trackLeft = track.getBoundingClientRect().left;
+    const trackRect = track.getBoundingClientRect();
+    const trackCenter = trackRect.left + trackRect.width / 2;
     let closest = 0;
     let distance = Infinity;
 
     slides.forEach((slide, index) => {
-      const delta = Math.abs(slide.getBoundingClientRect().left - trackLeft);
+      const slideRect = slide.getBoundingClientRect();
+      const slideCenter = slideRect.left + slideRect.width / 2;
+      const delta = Math.abs(slideCenter - trackCenter);
       if (delta < distance) {
         distance = delta;
         closest = index;
@@ -132,7 +138,6 @@ document.querySelectorAll('[data-carousel]').forEach((carousel, carouselIndex) =
     currentIndex = nearestIndex();
     if (count) count.textContent = `${currentIndex + 1} / ${slides.length}`;
 
-    const singleSlide = slides.length === 1;
     if (previous) previous.disabled = singleSlide;
     if (next) next.disabled = singleSlide;
   };

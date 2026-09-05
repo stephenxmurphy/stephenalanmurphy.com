@@ -275,6 +275,7 @@ p.project-copy { margin-bottom: 0; }
   font-variant-numeric: tabular-nums;
 }
 .carousel-controls > div { display: flex; gap: 7px; }
+.is-single-slide .carousel-controls > div { display: none; }
 .carousel-controls button {
   width: 38px;
   height: 38px;
