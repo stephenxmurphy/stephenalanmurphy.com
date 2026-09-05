@@ -149,23 +149,27 @@
 }
 .education-summary h2 {
   margin: 0;
-  font-size: 15px;
-  letter-spacing: -.015em;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
 }
 .education-item strong {
+  color: #454549;
   font-size: 14px;
+  font-weight: 600;
 }
 .education-item span {
   margin-top: 3px;
   color: var(--muted);
   font-size: 13px;
+  font-variant-numeric: tabular-nums;
 }
 .education-item small {
   display: block;
   margin-top: 7px;
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .career-summary {
