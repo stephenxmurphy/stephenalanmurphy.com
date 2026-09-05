@@ -185,6 +185,9 @@
   padding: 17px 0 18px;
   border-bottom: 1px solid #c7c7cc;
 }
+.career-list li:last-child {
+  border-bottom: 0;
+}
 .career-list h2,
 .career-list p {
   margin: 0;
