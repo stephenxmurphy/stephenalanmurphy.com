@@ -413,6 +413,8 @@
 }
 .project-copy {
   margin: 0;
+  text-align: justify;
+  text-justify: inter-word;
 }
 .project-copy p:last-child {
   margin-bottom: 0;
@@ -703,6 +705,16 @@ footer {
   }
   .bikes-section {
     padding: 52px 0 72px;
+  }
+}
+
+@media (max-width: 400px) {
+  .wordmark {
+    font-size: 0;
+  }
+  .wordmark::after {
+    content: "SM";
+    font-size: 13px;
   }
 }
 
