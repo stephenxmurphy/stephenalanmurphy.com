@@ -37,15 +37,13 @@
   width: 34px;
   padding: 0;
   justify-content: center;
-  border-color: #0a66c2;
-  border-radius: 7px;
-  background: #0a66c2;
-  color: #fff;
+  border-color: transparent;
+  background: transparent;
 }
-.social-icon-link svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
+.social-icon-link img {
+  width: 24px;
+  height: 22px;
+  object-fit: contain;
 }
 .cta-arrow {
   display: inline-block;
