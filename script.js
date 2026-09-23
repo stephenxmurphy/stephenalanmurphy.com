@@ -1,3 +1,22 @@
+// Overlapping, softly masked blur increments avoid a single hard blur boundary.
+// Gaussian variances add: these increments approximate a linear 0–16px ramp
+// from the bottom of the navigation stack to its top.
+if (document.querySelector('.site-header')) {
+  const frost = document.createElement('div');
+  frost.className = 'header-frost';
+  frost.setAttribute('aria-hidden', 'true');
+  const steps = 12;
+  for (let step = 1; step <= steps; step += 1) {
+    const layer = document.createElement('div');
+    layer.className = 'header-frost-layer';
+    layer.style.setProperty('--blur', `${(16 / steps) * Math.sqrt(2 * step - 1)}px`);
+    layer.style.setProperty('--fade-start', `${100 * (1 - step / steps)}%`);
+    layer.style.setProperty('--fade-end', `${100 * (1 - (step - 1) / steps)}%`);
+    frost.append(layer);
+  }
+  document.body.prepend(frost);
+}
+
 // Preserve old deep links from the former single-page portfolio.
 if (document.body.classList.contains('landing-page') && window.location.hash) {
   const hash = window.location.hash;

@@ -1,4 +1,4 @@
-/* Fade scrolling content into the frost beneath the full navigation stack. */
+/* Progressive frost: clear at the navigation's bottom, strongest at the top. */
 body {
   --header-bottom: 66px;
 }
@@ -12,25 +12,25 @@ body {
     --header-bottom: 130px;
   }
 }
-body::before {
-  content: "";
+.header-frost {
   position: fixed;
   inset: 0 0 auto;
-  height: calc(var(--header-bottom) + 28px);
+  height: var(--header-bottom);
   z-index: 89;
   pointer-events: none;
-  background: var(--bg);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 var(--header-bottom), transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0, #000 var(--header-bottom), transparent 100%);
+  background: linear-gradient(to bottom, rgba(245,245,247,.8), rgba(245,245,247,0));
 }
-@supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
-  body::before {
-    background: rgba(245,245,247,.8);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
+.header-frost-layer {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--fade-start), transparent var(--fade-end));
+  mask-image: linear-gradient(to bottom, #000 var(--fade-start), transparent var(--fade-end));
 }
 .site-header {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   grid-template-columns: auto minmax(0, 1fr) auto;
   column-gap: 20px;
   background: rgba(255,255,255,.98);
@@ -410,8 +410,8 @@ body::before {
   border-radius: 0 0 16px 16px;
   background: rgba(255,255,255,.98);
   box-shadow: 0 14px 30px rgba(0,0,0,.16);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .logo-progress {
   display: grid;
