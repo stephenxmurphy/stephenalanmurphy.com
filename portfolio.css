@@ -1,12 +1,27 @@
-/* Frost the gap above the floating header as content scrolls underneath. */
+/* Fade scrolling content into the frost beneath the full navigation stack. */
+body {
+  --header-bottom: 66px;
+}
+.projects-page,
+.academic-page {
+  --header-bottom: 134px;
+}
+@media (max-width: 720px) {
+  .projects-page,
+  .academic-page {
+    --header-bottom: 130px;
+  }
+}
 body::before {
   content: "";
   position: fixed;
   inset: 0 0 auto;
-  height: 10px;
-  z-index: 99;
+  height: calc(var(--header-bottom) + 28px);
+  z-index: 89;
   pointer-events: none;
   background: var(--bg);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 var(--header-bottom), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 var(--header-bottom), transparent 100%);
 }
 @supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
   body::before {
