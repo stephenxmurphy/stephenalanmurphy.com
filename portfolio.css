@@ -54,14 +54,14 @@ body {
   background: #f0f0f3;
 }
 .site-header nav a:focus-visible {
-  outline: 2px solid #245b86;
+  outline: 2px solid #242426;
   outline-offset: 2px;
 }
 .site-header nav a[aria-current="page"] {
-  color: #163e60;
+  color: #242426;
   font-weight: 700;
-  background: #e5eef6;
-  box-shadow: inset 0 0 0 1px #afc5d8;
+  background: #ededee;
+  box-shadow: inset 0 0 0 1px #242426;
 }
 .wordmark {
   white-space: nowrap;
