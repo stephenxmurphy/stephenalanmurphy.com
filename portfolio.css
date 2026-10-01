@@ -575,7 +575,7 @@ body {
   padding: 42px 0 46px;
   border-bottom: 1px solid var(--line-light);
 }
-.patents-block h2 {
+.patents-block h3 {
   margin-bottom: 7px;
   font-size: 25px;
   line-height: 1.1;
