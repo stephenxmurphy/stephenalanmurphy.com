@@ -339,7 +339,7 @@ At Reverb Industrial, I was responsible for the complete system design of a new 
 Patents
 
 **Summary**  
-FlexStyle patent family — 8 U.S. grants (3 original + 5 continuations) · 1 pending application
+8 U.S. grants (3 original + 5 continuations) · 1 pending application
 
 **Patent labels**
 
