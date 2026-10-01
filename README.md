@@ -68,5 +68,5 @@ That branch points to commit `3bd2e0f4c8f36ba87da857de34313b898f525420`.
 
 - Most portfolio images are stored locally in the repository under `assets/projects/`; the public site does not depend on Wix-hosted media.
 - The X-BAT section embeds Shield AI's official public launch video and loads an official Shield AI engine-testing still.
-- The current résumé button opens the archived 2023 PDF in the browser's PDF viewer; the file will be replaced when the updated résumé is ready.
+- All résumé links open `assets/resume/Stephen_Murphy_Resume.pdf`, the finalized one-page résumé, in the browser's PDF viewer. Its editable source lives in the private `job-applications` repository.
 - The original SkySafe MM2 internal-electronics image was not present in the recovered media archive, so the public site currently shows the exterior MM2 image only.
