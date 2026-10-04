@@ -49,7 +49,7 @@ Stephen Murphy, MEng
 
 ### Intro
 
-Welcome — I’m a mechanical engineer focused on product design, mechanisms, drones, consumer hardware, simulation, and engineering leadership.
+Welcome — I’m a mechanical engineer with over 10 years of experience in product design, mechanisms, drones, consumer hardware, simulation, and engineering leadership.
 
 This portfolio is split into Professional Projects and Academic & Internship Projects. Start with the career summary and highlights below, then use the navigation above to explore the full project pages.
 
